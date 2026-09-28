@@ -1,0 +1,179 @@
+<title>Legado Jah Fabio</title>
+<style>
+/* Layout: vista previa a la izquierda y controles a la derecha; en el teléfono se apilan. Una sola estética nocturna a propósito. */
+:root {
+  color-scheme: dark;
+  --bg: #0f0b08;
+  --panel: #19130d;
+  --panel-2: #221a12;
+  --line: #3a2d20;
+  --fg: #f5ecd7;
+  --muted: #bcae93;
+  --gold: #f4b927;
+  --red: #e2463a;
+  --green: #27a95b;
+  --ink: #0d0a07;
+  --display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --sans: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --script: "Kaushan Script", "Brush Script MT", cursive;
+  --radius: 10px;
+}
+/*FONTS*/
+[hidden] { display: none !important; }
+html, body { background: var(--bg); }
+body { color: var(--fg); font-family: var(--sans); font-size: 15px; line-height: 1.55; font-weight: 600; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 48px; }
+a { color: var(--gold); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.top { display: grid; gap: 6px; padding-block: 8px 18px; }
+.tri { display: block; width: 132px; height: 8px; background: linear-gradient(90deg, var(--red) 0 33.3%, var(--gold) 0 66.6%, var(--green) 0); border-radius: 2px; }
+.top h1 { margin: 6px 0 0; font-family: var(--display); font-weight: 400; font-size: clamp(38px, 7vw, 64px); line-height: 1; letter-spacing: 0.5px; text-wrap: balance; }
+.top h1 em { font-family: var(--script); font-style: normal; color: var(--gold); font-size: 0.72em; margin-left: 8px; }
+.lede { margin: 6px 0 0; max-width: 62ch; color: var(--muted); }
+
+.tabs { display: flex; gap: 4px; padding: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; width: fit-content; max-width: 100%; margin-block: 4px 18px; }
+.tabs button { font: 700 14px/1 var(--sans); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); background: transparent; border: 0; border-radius: 999px; padding: 11px 18px; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--gold); color: var(--ink); }
+
+.studio { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+@media (max-width: 880px) { .studio { grid-template-columns: minmax(0, 1fr); } }
+
+.stage { display: grid; gap: 12px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); }
+@media (max-width: 880px) { .stage { position: static; } }
+.frame { width: min(100%, calc(74vh * var(--ar, 0.8))); margin-inline: auto; border-radius: 6px; overflow: hidden; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55); background: #000; }
+.frame canvas { display: block; width: 100%; height: auto; }
+.player { display: flex; align-items: center; gap: 12px; width: min(100%, calc(74vh * var(--ar, 0.8))); margin-inline: auto; }
+.player input[type="range"] { flex: 1; min-width: 0; accent-color: var(--gold); }
+.player output { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 7ch; text-align: right; }
+
+.controls { display: grid; gap: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; min-width: 0; }
+.field { display: grid; gap: 6px; }
+.field label, .legend { font-size: 12px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--gold); }
+.hint { margin: 0; font-size: 13px; color: var(--muted); font-weight: 500; }
+input[type="text"], textarea { width: 100%; box-sizing: border-box; font: 600 15px/1.45 var(--sans); color: var(--fg); background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 11px 12px; }
+textarea { resize: vertical; min-height: 96px; }
+input[type="text"]:focus, textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px rgba(244, 185, 39, 0.25); }
+.check { display: flex; gap: 10px; align-items: center; font-weight: 600; }
+.check input { width: 18px; height: 18px; accent-color: var(--gold); }
+
+.photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.slot { position: relative; aspect-ratio: 1; border: 1px dashed var(--line); border-radius: 8px; background: var(--panel-2); display: grid; place-items: center; overflow: hidden; color: var(--muted); font-size: 12px; text-align: center; padding: 6px; }
+.slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slot button { position: absolute; right: 6px; bottom: 6px; font: 700 12px/1 var(--sans); background: rgba(13, 10, 7, 0.85); color: var(--fg); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; cursor: pointer; }
+.file-btn { position: relative; display: inline-flex; width: fit-content; }
+.file-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { font: 800 14px/1 var(--sans); letter-spacing: 1px; text-transform: uppercase; border-radius: 999px; padding: 14px 20px; cursor: pointer; border: 2px solid var(--gold); background: var(--gold); color: var(--ink); }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn:disabled { opacity: 0.5; cursor: progress; }
+#status { margin: 0; min-height: 1.5em; color: var(--fg); font-weight: 600; }
+.fallback { display: grid; gap: 10px; }
+.fallback img, .fallback video { width: min(100%, 360px); border-radius: 6px; }
+
+.facts { margin-top: 36px; display: grid; gap: 10px; max-width: 72ch; }
+.facts h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 30px; letter-spacing: 0.5px; }
+.facts ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-weight: 500; }
+.sources { font-size: 13px; color: var(--muted); font-weight: 500; margin: 0; }
+footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; font-weight: 500; max-width: 72ch; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="tri" aria-hidden="true"></span>
+    <h1>Jah Fabio <em>Legado</em></h1>
+    <p class="lede">Tarjeta, collage y reel para homenajear a Jah Fabio (1981–2025). Cambiá los textos, sumá tus fotos y descargá cada pieza lista para publicar.</p>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Pieza">
+    <button type="button" role="tab" id="tab-tarjeta" data-kind="card" aria-selected="true">Tarjeta</button>
+    <button type="button" role="tab" id="tab-collage" data-kind="collage" aria-selected="false">Collage</button>
+    <button type="button" role="tab" id="tab-reel" data-kind="reel" aria-selected="false">Reel</button>
+  </nav>
+
+  <main class="studio">
+    <section class="stage" aria-label="Vista previa">
+      <div class="frame" id="frame"><canvas id="preview" width="1080" height="1350" role="img" aria-label="Vista previa de la pieza"></canvas></div>
+      <div class="player" id="player" hidden>
+        <button type="button" class="btn ghost" id="play">Pausar</button>
+        <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Posición del reel">
+        <output id="time" for="scrub">0.0 s</output>
+      </div>
+    </section>
+
+    <form class="controls" id="form" autocomplete="off">
+      <div class="field" data-for="card">
+        <label for="phrase">Frase de la tarjeta</label>
+        <textarea id="phrase" name="phrase" rows="4"></textarea>
+        <p class="hint">Escribí la frase que quieras mostrar. El tamaño se ajusta solo.</p>
+      </div>
+
+      <div class="field" data-for="reel">
+        <label for="reelPhrase">Frase animada del reel (opcional)</label>
+        <textarea id="reelPhrase" name="reelPhrase" rows="3" placeholder="Si la completás, aparece palabra por palabra después del nombre."></textarea>
+      </div>
+
+      <div class="field" data-for="card reel">
+        <label for="song">Nombre del tema (opcional)</label>
+        <input type="text" id="song" name="song" placeholder="Ej.: el tema que vas a usar de fondo">
+      </div>
+
+      <div class="field" data-for="reel">
+        <label for="cta">Llamado a compartir</label>
+        <input type="text" id="cta" name="cta">
+      </div>
+
+      <div class="field" data-for="card collage reel">
+        <label for="hashtag">Hashtag</label>
+        <input type="text" id="hashtag" name="hashtag">
+      </div>
+
+      <div class="field" data-for="card collage reel">
+        <span class="legend" id="photos-legend">Tus fotos (hasta 3)</span>
+        <div class="photos" id="slots" aria-labelledby="photos-legend"></div>
+        <p class="hint">La foto 1 reemplaza al león del collage y aparece detrás del nombre en el reel; la 2 va en lugar del vinilo y la 3 del micrófono.</p>
+        <span class="file-btn">
+          <span class="btn ghost" aria-hidden="true">Agregar fotos</span>
+          <input type="file" id="photoInput" accept="image/*" multiple aria-label="Agregar fotos">
+        </span>
+      </div>
+
+      <label class="check" data-for="card"><input type="checkbox" id="cardPhotoBg" name="cardPhotoBg"> Usar la foto 1 de fondo en la tarjeta</label>
+
+      <div class="actions">
+        <button type="button" class="btn" id="savePng" data-for="card collage">Descargar PNG</button>
+        <button type="button" class="btn" id="record" data-for="reel">Grabar y descargar video</button>
+        <button type="button" class="btn ghost" id="readyMp4" data-for="reel">Reel listo en MP4</button>
+        <button type="button" class="btn ghost" id="reset">Restaurar textos</button>
+      </div>
+      <p class="hint" data-for="reel">El video se graba en tiempo real: dejá esta pantalla abierta hasta que termine. El MP4 listo trae los textos originales.</p>
+      <p id="status" role="status" aria-live="polite"></p>
+      <div class="fallback" id="fallback" hidden>
+        <p class="hint">Este visor no permite descargas directas. Mantené presionada la imagen o el video para guardarlo.</p>
+        <img id="fallbackImg" alt="Pieza exportada" hidden>
+        <video id="fallbackVideo" controls playsinline hidden></video>
+      </div>
+    </form>
+  </main>
+
+  <section class="facts" aria-labelledby="facts-title">
+    <h2 id="facts-title">Sobre Jah Fabio</h2>
+    <ul>
+      <li>Nació en Guadalajara, Jalisco, en 1981 y murió el 24 de mayo de 2025, a los 43 años.</li>
+      <li>Referente del roots reggae y el dancehall en México desde 2005.</li>
+      <li>Llevó su música a Cuba, EE. UU., Venezuela, Colombia, Chile, Argentina, España y Jamaica, donde representó a Latinoamérica en Reggae Sumfest.</li>
+      <li>Autor de «Somos los del Atlas» (2019) y «Atlas campeón» (2022).</li>
+    </ul>
+    <p class="sources">Fuentes:
+      <a href="https://www.infobae.com/mexico/2025/05/26/de-que-murio-jah-fabio-cantante-de-reggae-y-autor-del-himno-del-atlas/" target="_blank" rel="noopener">Infobae</a>,
+      <a href="https://www.eluniversal.com.mx/espectaculos/jah-fabio-musico-de-reggae-muere-a-los-43-anos-tenia-planes-de-presentarse-en-junio/" target="_blank" rel="noopener">El Universal</a>,
+      <a href="https://www.reggaechalice.cl/jah-fabio-represento-a-latinoamerica-en-el-reggae-sumfest-247/?lang=en" target="_blank" rel="noopener">Reggae Chalice</a>,
+      <a href="https://en.wikipedia.org/wiki/Jah_Fabio" target="_blank" rel="noopener">Wikipedia</a>.
+    </p>
+  </section>
+
+  <footer>Homenaje hecho por fans, sin fines comerciales. Para publicar el reel, agregá la canción desde la biblioteca de música de Instagram o TikTok: así queda con licencia y aparece en la página del tema.</footer>
+</div>
+<!--SCRIPTS-->
