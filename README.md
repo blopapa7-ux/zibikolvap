@@ -52,3 +52,7 @@ Fuentes: [Infobae](https://www.infobae.com/mexico/2025/05/26/de-que-murio-jah-fa
 Tipografías con licencia SIL Open Font License (ver `fonts/`): Anton, Kaushan Script, Playfair Display y Montserrat.
 
 Homenaje hecho por fans, sin fines comerciales.
+
+## Otros proyectos en este repo
+
+- [`lucky-lgm-intro/`](lucky-lgm-intro/): *Misión Corrientes*, la intro tipo battle royale de Lucky LGM para el Festival Cultura D (biblia de producción, prompts y HUD para CapCut).

@@ -1,0 +1,36 @@
+<div id="estudio" class="estudio con-fondo">
+  <div class="est-barra">
+    <div class="est-presets" role="group" aria-label="Intro">
+      <button type="button" id="est-p-lucky" data-preset="lucky" aria-pressed="true">Lucky LGM</button>
+      <button type="button" id="est-p-lxlx" data-preset="lxlx" aria-pressed="false">LXLX ZZZ</button>
+    </div>
+    <label class="est-check" for="est-fondo"><input type="checkbox" id="est-fondo" checked> Ver sobre fondo de ciudad</label>
+    <span class="est-espacio"></span>
+    <button type="button" id="est-reset" class="est-sec">Volver a los textos originales</button>
+    <button type="button" id="est-zip" class="est-accion" data-solo-local>Bajar todo (.zip)</button>
+  </div>
+
+  <fieldset class="est-datos">
+    <legend>Datos del show</legend>
+    <div id="est-datos" class="est-grilla"></div>
+  </fieldset>
+
+  <div class="est-editor">
+    <figure class="est-grande">
+      <div class="est-marco"><img id="est-img" alt=""></div>
+      <figcaption id="est-archivo"></figcaption>
+    </figure>
+    <div class="est-panel">
+      <p id="est-toma" class="est-toma"></p>
+      <h3 id="est-titulo" class="est-titulo"></h3>
+      <div id="est-campos" class="est-grilla est-grilla-campos"></div>
+      <div class="est-pie">
+        <button type="button" id="est-png" class="est-accion" data-solo-local>Bajar este PNG</button>
+        <p class="est-nota" data-solo-artifact>Para guardar la imagen: clic derecho sobre la vista previa → <b>Guardar imagen como…</b> En el celu, dejala apretada.</p>
+        <p class="est-nota">Los cambios quedan guardados en este navegador.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="est-lista" class="est-lista"></div>
+</div>

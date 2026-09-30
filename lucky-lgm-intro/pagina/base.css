@@ -1,0 +1,28 @@
+:root {
+  /* Layout: briefing de misión. Barra de secciones fija arriba, una columna de lectura y el banco del HUD más ancho. */
+  --noche: #070a1f;
+  --panel: #0e1334;
+  --panel-alto: #161c48;
+  --fondo-campo: #0a0e2a;
+  --linea: rgba(150, 165, 255, 0.2);
+  --texto: #eef0ff;
+  --tenue: #a9b1db;
+  --blanco: #ffffff;
+  --tinta: #050818;
+  --magenta: #ff2d8d;
+  --rosa: #ff7ac0;
+  --cian: #28d7ff;
+  --oro: #ffc83d;
+  --verde: #3bd16f;
+  --cuadro-a: #151a40;
+  --cuadro-b: #1d2352;
+  --display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --cuerpo: "Barlow", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--noche); color: var(--texto); font: 400 17px/1.6 var(--cuerpo); -webkit-font-smoothing: antialiased; }
+a { color: var(--cian); text-decoration-color: rgba(40, 215, 255, 0.45); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--cian); }
+:focus-visible { outline: 2px solid var(--cian); outline-offset: 2px; }
