@@ -1087,7 +1087,7 @@ td code { white-space: nowrap; }
 </tbody></table></div>
 <div id="hud" class="bloque-hud">
 <h3>El HUD, para ver y editar acá</h3>
-<p>Son 25 PNG transparentes de 1080×1920, uno por cada momento del video, ya ubicados para arrastrarlos a pantalla completa en CapCut. Cambiá el nombre, los textos o los números y mirá cómo queda. El pack original está en la carpeta <code>lucky-lgm-intro/output/hud</code> del repo.</p>
+<p>Son 25 PNG transparentes de 1080×1920, uno por cada momento del video, ya ubicados para arrastrarlos a pantalla completa en CapCut. Cambiá el nombre, los textos o los números, mirá cómo queda y bajá cada PNG o todos juntos en un .zip. El pack original también está en la carpeta <code>lucky-lgm-intro/output/hud</code> del repo.</p>
 <div id="estudio" class="estudio con-fondo">
   <div class="est-barra">
     <div class="est-presets" role="group" aria-label="Intro">
@@ -1097,7 +1097,7 @@ td code { white-space: nowrap; }
     <label class="est-check" for="est-fondo"><input type="checkbox" id="est-fondo" checked> Ver sobre fondo de ciudad</label>
     <span class="est-espacio"></span>
     <button type="button" id="est-reset" class="est-sec">Volver a los textos originales</button>
-    <button type="button" id="est-zip" class="est-accion" data-solo-local>Bajar todo (.zip)</button>
+    <button type="button" id="est-zip" class="est-accion" data-descarga>Bajar todo (.zip)</button>
   </div>
 
   <fieldset class="est-datos">
@@ -1115,8 +1115,9 @@ td code { white-space: nowrap; }
       <h3 id="est-titulo" class="est-titulo"></h3>
       <div id="est-campos" class="est-grilla est-grilla-campos"></div>
       <div class="est-pie">
-        <button type="button" id="est-png" class="est-accion" data-solo-local>Bajar este PNG</button>
-        <p class="est-nota" data-solo-artifact>Para guardar la imagen: clic derecho sobre la vista previa → <b>Guardar imagen como…</b> En el celu, dejala apretada.</p>
+        <button type="button" id="est-png" class="est-accion" data-descarga>Bajar este PNG</button>
+        <p class="est-nota" data-sin-descarga>Para guardar la imagen: clic derecho sobre la vista previa → <b>Guardar imagen como…</b> En el celu, dejala apretada.</p>
+        <p id="est-estado" class="est-nota" role="status"></p>
         <p class="est-nota">Los cambios quedan guardados en este navegador.</p>
       </div>
     </div>
@@ -2904,17 +2905,28 @@ td code { white-space: nowrap; }
 
 </script>
 <script>
-window.HUD_MODO = 'local';
+// Abriendo el HTML con doble clic, los PNG y el .zip se bajan con un link de descarga común.
+// La página publicada no incluye este archivo: ahí guarda la capacidad "downloads" del visor.
+window.HUD_GUARDAR = function (blob, nombre) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = nombre;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+};
+
 </script>
 <script>
 // Estudio del HUD: cambiar textos y números, ver cada pieza y bajarla en PNG.
-// En modo "artifact" (la página publicada) el visor bloquea las descargas, así que
-// se ocultan los botones y la imagen se guarda con clic derecho.
+// Abierto como archivo, guarda con hud/guardar-local.js; en la página publicada, con la
+// capacidad "downloads" del visor. Si no hay ninguna de las dos, se ocultan los botones
+// y la imagen se guarda con clic derecho.
 (function () {
   'use strict';
 
   const HUD = window.LuckyHUD;
-  const MODO = window.HUD_MODO || 'local';
   const CLAVE = 'mision-corrientes-hud-v1:';
   const $ = (id) => document.getElementById(id);
 
@@ -3130,14 +3142,38 @@ window.HUD_MODO = 'local';
     mostrarTodo();
   }
 
-  function bajar(blob, nombre) {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = nombre;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  let descargar = window.HUD_GUARDAR || null;
+
+  function mostrarDescargas(si) {
+    document.querySelectorAll('[data-descarga]').forEach((el) => (el.hidden = !si));
+    document.querySelectorAll('[data-sin-descarga]').forEach((el) => (el.hidden = si));
+  }
+
+  function estado(texto) {
+    $('est-estado').textContent = texto;
+  }
+
+  async function prepararDescargas() {
+    mostrarDescargas(Boolean(descargar));
+    if (descargar || !window.claude || typeof window.claude.use !== 'function') return;
+    const downloads = await window.claude.use('downloads');
+    if (!downloads) return;
+    descargar = async (blob, nombre) => {
+      try {
+        await downloads.save({ filename: nombre, data: blob });
+        estado('');
+      } catch (e) {
+        const codigo = e && e.code;
+        if (codigo === 'declined') estado('');
+        else if (codigo === 'rate_limited') estado('Ya hay una descarga esperando que la confirmes.');
+        else {
+          descargar = null;
+          mostrarDescargas(false);
+          estado('Desde acá no se puede bajar: guardá la imagen con clic derecho.');
+        }
+      }
+    };
+    mostrarDescargas(true);
   }
 
   // ZIP sin compresión: los PNG ya vienen comprimidos.
@@ -3218,9 +3254,9 @@ window.HUD_MODO = 'local';
       const blob = await aBlob(c);
       archivos.push({ nombre: est.piezas[i].archivo + '.png', datos: new Uint8Array(await blob.arrayBuffer()) });
     }
-    bajar(zip(archivos), 'hud-' + presetId + '.zip');
     boton.textContent = texto;
     boton.disabled = false;
+    if (descargar) await descargar(zip(archivos), 'hud-' + presetId + '.zip');
   }
 
   function fondoDePrueba() {
@@ -3236,9 +3272,7 @@ window.HUD_MODO = 'local';
   }
 
   function iniciar() {
-    const local = MODO === 'local';
-    document.querySelectorAll('[data-solo-local]').forEach((el) => (el.hidden = !local));
-    document.querySelectorAll('[data-solo-artifact]').forEach((el) => (el.hidden = local));
+    prepararDescargas();
     document.querySelectorAll('[data-preset]').forEach((b) => b.addEventListener('click', () => cambiarPreset(b.dataset.preset)));
     $('est-fondo').addEventListener('change', (e) => $('estudio').classList.toggle('con-fondo', e.target.checked));
     $('est-reset').addEventListener('click', () => {
@@ -3251,7 +3285,8 @@ window.HUD_MODO = 'local';
     });
     $('est-png').addEventListener('click', async () => {
       pintar(grande, elegida);
-      bajar(await aBlob(grande), est.piezas[elegida].archivo + '.png');
+      const blob = await aBlob(grande);
+      if (descargar) await descargar(blob, est.piezas[elegida].archivo + '.png');
     });
     $('est-zip').addEventListener('click', bajarTodo);
     fondoDePrueba();

@@ -7,7 +7,7 @@
     <label class="est-check" for="est-fondo"><input type="checkbox" id="est-fondo" checked> Ver sobre fondo de ciudad</label>
     <span class="est-espacio"></span>
     <button type="button" id="est-reset" class="est-sec">Volver a los textos originales</button>
-    <button type="button" id="est-zip" class="est-accion" data-solo-local>Bajar todo (.zip)</button>
+    <button type="button" id="est-zip" class="est-accion" data-descarga>Bajar todo (.zip)</button>
   </div>
 
   <fieldset class="est-datos">
@@ -25,8 +25,9 @@
       <h3 id="est-titulo" class="est-titulo"></h3>
       <div id="est-campos" class="est-grilla est-grilla-campos"></div>
       <div class="est-pie">
-        <button type="button" id="est-png" class="est-accion" data-solo-local>Bajar este PNG</button>
-        <p class="est-nota" data-solo-artifact>Para guardar la imagen: clic derecho sobre la vista previa → <b>Guardar imagen como…</b> En el celu, dejala apretada.</p>
+        <button type="button" id="est-png" class="est-accion" data-descarga>Bajar este PNG</button>
+        <p class="est-nota" data-sin-descarga>Para guardar la imagen: clic derecho sobre la vista previa → <b>Guardar imagen como…</b> En el celu, dejala apretada.</p>
+        <p id="est-estado" class="est-nota" role="status"></p>
         <p class="est-nota">Los cambios quedan guardados en este navegador.</p>
       </div>
     </div>

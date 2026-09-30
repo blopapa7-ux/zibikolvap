@@ -50,7 +50,7 @@ function seccion(id, md, extra = '') {
 const estudio = leer('hud', 'estudio.html');
 const bloqueHud = `<div id="hud" class="bloque-hud">
 <h3>El HUD, para ver y editar acá</h3>
-<p>Son 25 PNG transparentes de 1080×1920, uno por cada momento del video, ya ubicados para arrastrarlos a pantalla completa en CapCut. Cambiá el nombre, los textos o los números y mirá cómo queda. El pack original está en la carpeta <code>lucky-lgm-intro/output/hud</code> del repo.</p>
+<p>Son 25 PNG transparentes de 1080×1920, uno por cada momento del video, ya ubicados para arrastrarlos a pantalla completa en CapCut. Cambiá el nombre, los textos o los números, mirá cómo queda y bajá cada PNG o todos juntos en un .zip. El pack original también está en la carpeta <code>lucky-lgm-intro/output/hud</code> del repo.</p>
 ${estudio}</div>
 `;
 
@@ -62,7 +62,9 @@ function pagina(modo) {
   const [cabeza, cuerpo] = leer('pagina', 'pagina.html')
     .replace('/*ESTILOS*/', () => estilos)
     .split('<!--CUERPO-->');
-  const js = scripts([leer('hud', 'hud.js'), `window.HUD_MODO = '${modo}';`, leer('hud', 'app.js'), leer('pagina', 'pagina.js')]);
+  // la página publicada guarda con la capacidad "downloads"; el archivo local, con un link de descarga
+  const guardado = modo === 'local' ? [leer('hud', 'guardar-local.js')] : [];
+  const js = scripts([leer('hud', 'hud.js'), ...guardado, leer('hud', 'app.js'), leer('pagina', 'pagina.js')]);
   return { cabeza, cuerpo: cuerpo.replace('<!--BIBLIA-->', () => biblia).replace('<!--SCRIPTS-->', () => js) };
 }
 
@@ -97,7 +99,7 @@ ${estilos}
 <div class="bloque-hud">
 ${estudio}</div>
 </main>
-${scripts([leer('hud', 'hud.js'), "window.HUD_MODO = 'local';", leer('hud', 'app.js')])}
+${scripts([leer('hud', 'hud.js'), leer('hud', 'guardar-local.js'), leer('hud', 'app.js')])}
 `,
 };
 

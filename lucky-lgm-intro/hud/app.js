@@ -1,11 +1,11 @@
 // Estudio del HUD: cambiar textos y números, ver cada pieza y bajarla en PNG.
-// En modo "artifact" (la página publicada) el visor bloquea las descargas, así que
-// se ocultan los botones y la imagen se guarda con clic derecho.
+// Abierto como archivo, guarda con hud/guardar-local.js; en la página publicada, con la
+// capacidad "downloads" del visor. Si no hay ninguna de las dos, se ocultan los botones
+// y la imagen se guarda con clic derecho.
 (function () {
   'use strict';
 
   const HUD = window.LuckyHUD;
-  const MODO = window.HUD_MODO || 'local';
   const CLAVE = 'mision-corrientes-hud-v1:';
   const $ = (id) => document.getElementById(id);
 
@@ -221,14 +221,38 @@
     mostrarTodo();
   }
 
-  function bajar(blob, nombre) {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = nombre;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  let descargar = window.HUD_GUARDAR || null;
+
+  function mostrarDescargas(si) {
+    document.querySelectorAll('[data-descarga]').forEach((el) => (el.hidden = !si));
+    document.querySelectorAll('[data-sin-descarga]').forEach((el) => (el.hidden = si));
+  }
+
+  function estado(texto) {
+    $('est-estado').textContent = texto;
+  }
+
+  async function prepararDescargas() {
+    mostrarDescargas(Boolean(descargar));
+    if (descargar || !window.claude || typeof window.claude.use !== 'function') return;
+    const downloads = await window.claude.use('downloads');
+    if (!downloads) return;
+    descargar = async (blob, nombre) => {
+      try {
+        await downloads.save({ filename: nombre, data: blob });
+        estado('');
+      } catch (e) {
+        const codigo = e && e.code;
+        if (codigo === 'declined') estado('');
+        else if (codigo === 'rate_limited') estado('Ya hay una descarga esperando que la confirmes.');
+        else {
+          descargar = null;
+          mostrarDescargas(false);
+          estado('Desde acá no se puede bajar: guardá la imagen con clic derecho.');
+        }
+      }
+    };
+    mostrarDescargas(true);
   }
 
   // ZIP sin compresión: los PNG ya vienen comprimidos.
@@ -309,9 +333,9 @@
       const blob = await aBlob(c);
       archivos.push({ nombre: est.piezas[i].archivo + '.png', datos: new Uint8Array(await blob.arrayBuffer()) });
     }
-    bajar(zip(archivos), 'hud-' + presetId + '.zip');
     boton.textContent = texto;
     boton.disabled = false;
+    if (descargar) await descargar(zip(archivos), 'hud-' + presetId + '.zip');
   }
 
   function fondoDePrueba() {
@@ -327,9 +351,7 @@
   }
 
   function iniciar() {
-    const local = MODO === 'local';
-    document.querySelectorAll('[data-solo-local]').forEach((el) => (el.hidden = !local));
-    document.querySelectorAll('[data-solo-artifact]').forEach((el) => (el.hidden = local));
+    prepararDescargas();
     document.querySelectorAll('[data-preset]').forEach((b) => b.addEventListener('click', () => cambiarPreset(b.dataset.preset)));
     $('est-fondo').addEventListener('change', (e) => $('estudio').classList.toggle('con-fondo', e.target.checked));
     $('est-reset').addEventListener('click', () => {
@@ -342,7 +364,8 @@
     });
     $('est-png').addEventListener('click', async () => {
       pintar(grande, elegida);
-      bajar(await aBlob(grande), est.piezas[elegida].archivo + '.png');
+      const blob = await aBlob(grande);
+      if (descargar) await descargar(blob, est.piezas[elegida].archivo + '.png');
     });
     $('est-zip').addEventListener('click', bajarTodo);
     fondoDePrueba();
