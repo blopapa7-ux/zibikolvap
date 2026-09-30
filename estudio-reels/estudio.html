@@ -1,0 +1,1527 @@
+<title>Estudio de Reels SZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: barra tipo claqueta arriba con pestañas; columna de 1180px; cada reel es una "toma" con foto a la izquierda y prompt a la derecha */
+:root {
+  --bg: #f1f2ee;
+  --surface: #ffffff;
+  --surface-2: #f6f7f3;
+  --ink: #161a17;
+  --muted: #58615a;
+  --line: #d9ddd6;
+  --sz: #15803d;
+  --sz-ink: #ffffff;
+  --sz-soft: #e2f2e7;
+  --gold: #c38e12;
+  --c-sexy: #b0175a;
+  --c-sexy-soft: #fbe6ef;
+  --c-baile: #6427cf;
+  --c-baile-soft: #eee7fc;
+  --c-normal: #0b6b84;
+  --c-normal-soft: #def1f5;
+  --e-pendiente: #7c867e;
+  --e-generado: #2159d6;
+  --e-editado: #a45308;
+  --e-publicado: #15803d;
+  --warn: #9a5b00;
+  --warn-soft: #fdf1dc;
+  --shadow: 0 1px 2px rgb(20 30 22 / .06), 0 6px 18px rgb(20 30 22 / .06);
+  --f-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e100f; --surface: #161917; --surface-2: #1c201d; --ink: #e6eae5; --muted: #9ca69e; --line: #2b312c;
+    --sz: #22c55e; --sz-ink: #062010; --sz-soft: #12301d; --gold: #e2b440;
+    --c-sexy: #f27ab4; --c-sexy-soft: #3a1729; --c-baile: #b095fb; --c-baile-soft: #291f46; --c-normal: #3fd0ea; --c-normal-soft: #0f2d35;
+    --e-pendiente: #7f8a82; --e-generado: #6aa6ff; --e-editado: #f0a53a; --e-publicado: #2fd06a;
+    --warn: #f0b24a; --warn-soft: #33260e;
+    --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 8px 24px rgb(0 0 0 / .25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e100f; --surface: #161917; --surface-2: #1c201d; --ink: #e6eae5; --muted: #9ca69e; --line: #2b312c;
+  --sz: #22c55e; --sz-ink: #062010; --sz-soft: #12301d; --gold: #e2b440;
+  --c-sexy: #f27ab4; --c-sexy-soft: #3a1729; --c-baile: #b095fb; --c-baile-soft: #291f46; --c-normal: #3fd0ea; --c-normal-soft: #0f2d35;
+  --e-pendiente: #7f8a82; --e-generado: #6aa6ff; --e-editado: #f0a53a; --e-publicado: #2fd06a;
+  --warn: #f0b24a; --warn-soft: #33260e;
+  --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 8px 24px rgb(0 0 0 / .25);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15px/1.5 var(--f-body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+h1, h2, h3, h4 { font-family: var(--f-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.mono { font-family: var(--f-mono); }
+:focus-visible { outline: 2px solid var(--sz); outline-offset: 2px; }
+
+/* ---------- barra superior ---------- */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1180px; margin: 0 auto; padding: 12px 16px 0; display: grid; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.wordmark { font-family: var(--f-display); font-weight: 800; font-stretch: 125%; letter-spacing: .22em; font-size: 15px; text-transform: uppercase; }
+.wordmark small { font-weight: 600; letter-spacing: .12em; color: var(--muted); font-size: 11px; margin-left: 6px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--e-pendiente); display: inline-block; }
+.pill.ok i { background: var(--sz); }
+.pill.warn i { background: var(--warn); }
+.brand .pill { margin-left: auto; }
+.nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; margin: 0 -4px; padding: 0 4px; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { text-decoration: none; white-space: nowrap; padding: 9px 12px 11px; font-weight: 600; font-size: 14px; color: var(--muted); border-bottom: 2px solid transparent; }
+.nav a:hover { color: var(--ink); }
+.nav a.on { color: var(--ink); border-bottom-color: var(--sz); }
+
+main { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 22px 64px; }
+.view { display: grid; gap: 22px; }
+.lede { color: var(--muted); max-width: 68ch; }
+.eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.h-view { font-size: clamp(24px, 3.2vw, 34px); font-weight: 800; font-stretch: 112%; letter-spacing: -.01em; }
+
+/* ---------- botones ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; padding: 7px 13px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-weight: 600; font-size: 13.5px; cursor: pointer; text-decoration: none; line-height: 1.2; }
+.btn:hover { border-color: color-mix(in srgb, var(--ink) 30%, var(--line)); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn.primary { background: var(--sz); border-color: var(--sz); color: var(--sz-ink); }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn.sm { min-height: 28px; padding: 4px 9px; font-size: 12.5px; border-radius: 7px; }
+.btn.ghost { background: transparent; }
+.btn.done { border-color: var(--sz); color: var(--sz); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+/* ---------- resumen y siguiente paso ---------- */
+.sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.sum div { padding: 14px 16px; border-right: 1px solid var(--line); }
+.sum div:last-child { border-right: 0; }
+.sum b { display: block; font-family: var(--f-display); font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.sum span { font-size: 12.5px; color: var(--muted); }
+.next { display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 14px 16px; border-radius: var(--r); background: var(--sz-soft); border: 1px solid color-mix(in srgb, var(--sz) 35%, transparent); }
+.next p { max-width: 70ch; }
+.next b { font-weight: 700; }
+
+/* ---------- grilla de modelos ---------- */
+.grid-m { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.mcard { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; padding: 12px; text-decoration: none; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--gold); border-radius: var(--r); box-shadow: var(--shadow); transition: transform .15s ease, border-color .15s ease; }
+.mcard:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--sz) 50%, var(--line)); border-top-color: var(--gold); }
+.face { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: 8px; overflow: hidden; background: var(--surface-2); display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; font-size: 26px; color: var(--muted); max-width: 100%; }
+.face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cara { position: absolute; top: 5px; left: 5px; background: var(--sz); color: var(--sz-ink); font: 700 9.5px/1 var(--f-mono); letter-spacing: .08em; padding: 3px 5px; border-radius: 4px; }
+.mc-body { min-width: 0; display: grid; gap: 6px; align-content: start; }
+.mc-body h3 { font-size: 19px; font-weight: 750; font-stretch: 105%; }
+.mc-est { font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.bar20 { display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; margin-top: 2px; }
+.bar20 i { height: 7px; border-radius: 2px; background: color-mix(in srgb, var(--e-pendiente) 30%, transparent); }
+.bar20 i.generado { background: var(--e-generado); }
+.bar20 i.editado { background: var(--e-editado); }
+.bar20 i.publicado { background: var(--e-publicado); }
+.mc-stats { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.skel { height: 138px; border-radius: var(--r); background: linear-gradient(90deg, var(--surface) 0%, var(--surface-2) 50%, var(--surface) 100%); background-size: 200% 100%; animation: sh 1.4s linear infinite; border: 1px solid var(--line); }
+@keyframes sh { to { background-position: -200% 0; } }
+.empty { padding: 26px 20px; border: 1px dashed var(--line); border-radius: var(--r); background: var(--surface); display: grid; gap: 10px; justify-items: start; }
+.empty h3 { font-size: 18px; }
+
+/* ---------- ficha ---------- */
+.back { font-size: 13.5px; color: var(--muted); text-decoration: none; font-weight: 600; }
+.back:hover { color: var(--ink); }
+.ficha { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 20px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--gold); border-radius: var(--r); }
+.f-info { min-width: 0; display: grid; gap: 10px; align-content: start; }
+.f-info h2 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 800; font-stretch: 110%; }
+.f-meta { font-size: 13px; color: var(--muted); }
+.dl { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 6px 14px; font-size: 14px; }
+.dl dt { color: var(--muted); font-size: 12px; font-family: var(--f-mono); text-transform: uppercase; letter-spacing: .06em; padding-top: 2px; }
+.dl dd { margin: 0; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); }
+.edit-grid { display: grid; gap: 10px; }
+.edit-grid label { display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); }
+.edit-grid input, .edit-grid textarea { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); resize: vertical; }
+
+/* ---------- barra de filtros ---------- */
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: var(--surface); flex-wrap: wrap; }
+.seg button { border: 0; background: transparent; padding: 7px 11px; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; border-right: 1px solid var(--line); }
+.seg button:last-child { border-right: 0; }
+.seg button.on { background: var(--ink); color: var(--bg); }
+.seg button .n { font-family: var(--f-mono); font-size: 11px; opacity: .75; margin-left: 4px; }
+
+/* ---------- tomas (reels) ---------- */
+.reels { display: grid; gap: 14px; }
+.toma { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); }
+.slate { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 9px 12px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+.slate .tk { font: 600 12px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; }
+.slate h3 { font-size: 16px; font-weight: 700; font-stretch: 104%; }
+.cat { font: 600 10.5px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; padding: 4px 7px; border-radius: 5px; }
+.cat.sexy { color: var(--c-sexy); background: var(--c-sexy-soft); }
+.cat.baile { color: var(--c-baile); background: var(--c-baile-soft); }
+.cat.normal { color: var(--c-normal); background: var(--c-normal-soft); }
+.estados { margin-left: auto; display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); flex-wrap: wrap; }
+.estados button { border: 0; background: transparent; font-size: 12px; font-weight: 600; padding: 6px 9px; cursor: pointer; color: var(--muted); border-right: 1px solid var(--line); }
+.estados button:last-child { border-right: 0; }
+.estados button.on { color: #fff; }
+.estados button.on[data-estado="pendiente"] { background: var(--e-pendiente); }
+.estados button.on[data-estado="generado"] { background: var(--e-generado); }
+.estados button.on[data-estado="editado"] { background: var(--e-editado); }
+.estados button.on[data-estado="publicado"] { background: var(--e-publicado); }
+:root[data-theme="dark"] .estados button.on, :root:not([data-theme="light"]) .estados button.on { color: #fff; }
+.toma-in { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 16px; padding: 14px; }
+.shot { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.shot .ph { width: 100%; aspect-ratio: 9 / 16; border-radius: 8px; overflow: hidden; background: var(--surface-2); border: 1px solid var(--line); display: block; padding: 0; cursor: zoom-in; max-width: 100%; }
+.shot .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shot .ideal { width: 100%; aspect-ratio: 9 / 16; border-radius: 8px; border: 1.5px dashed var(--line); padding: 12px; display: grid; align-content: center; gap: 6px; font-size: 13px; color: var(--muted); max-width: 100%; }
+.shot .ideal b { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+.shot small { font-size: 11.5px; color: var(--muted); overflow-wrap: anywhere; }
+.body { min-width: 0; display: grid; gap: 10px; align-content: start; }
+.idea { font-size: 14.5px; }
+.box { border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); min-width: 0; }
+.box-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 6px 6px 10px; border-bottom: 1px solid var(--line); }
+.box-h span { font: 600 10.5px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.prompt { margin: 0; padding: 10px 12px; font: 400 13px/1.6 var(--f-mono); white-space: pre-wrap; overflow-wrap: anywhere; user-select: all; -webkit-user-select: all; max-height: 16em; overflow: auto; }
+.specs { display: flex; flex-wrap: wrap; gap: 6px; font: 500 11.5px/1 var(--f-mono); color: var(--muted); }
+.specs span { padding: 5px 7px; border: 1px solid var(--line); border-radius: 5px; white-space: nowrap; }
+.specs span.hot { color: var(--sz); border-color: color-mix(in srgb, var(--sz) 45%, var(--line)); }
+.lines { display: grid; gap: 6px; font-size: 13.5px; }
+.lines > div { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.lines dt, .k { font: 600 10.5px/1.4 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); min-width: 76px; }
+.lines .v { flex: 1 1 220px; min-width: 0; overflow-wrap: anywhere; }
+details.more { font-size: 13px; }
+details.more summary { cursor: pointer; color: var(--muted); font-weight: 600; }
+details.more[open] summary { margin-bottom: 8px; }
+.alerta { font-size: 12.5px; color: var(--warn); background: var(--warn-soft); padding: 6px 9px; border-radius: 6px; }
+.vistas { display: inline-flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--muted); }
+.vistas input { width: 110px; padding: 5px 8px; border-radius: 7px; border: 1px solid var(--line); background: var(--surface-2); font-variant-numeric: tabular-nums; }
+
+/* ---------- escáner ---------- */
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 12px; }
+.step-h { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.step-h .tk { font: 600 11px/1 var(--f-mono); letter-spacing: .12em; color: var(--sz); }
+.step-h h3 { font-size: 18px; font-weight: 750; }
+.drop { border: 1.5px dashed var(--line); border-radius: var(--r); padding: 22px 16px; text-align: center; color: var(--muted); font-size: 14px; background: var(--surface-2); }
+.drop.over { border-color: var(--sz); color: var(--ink); background: var(--sz-soft); }
+.note { font-size: 13px; color: var(--muted); }
+.note.warn { color: var(--warn); }
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 10.5px/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+td .chips { gap: 4px; }
+td .chip { font-size: 11px; padding: 1px 6px; }
+.prog { height: 6px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+.prog i { display: block; height: 100%; width: 0; background: var(--sz); transition: width .2s ease; }
+.selm { display: grid; gap: 10px; padding-top: 12px; border-top: 1px solid var(--line); }
+.selm:first-child { border-top: 0; padding-top: 0; }
+.selm-h { display: flex; gap: 8px 14px; align-items: center; flex-wrap: wrap; }
+.selm-h h4 { font-size: 16px; font-weight: 750; }
+.selm-h .note { margin-right: auto; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
+.th { position: relative; aspect-ratio: 3 / 4; border-radius: 7px; overflow: hidden; background: var(--surface-2); border: 1px solid var(--line); max-width: 100%; }
+.th img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.th .nn { position: absolute; left: 4px; top: 4px; font: 600 10px/1 var(--f-mono); background: rgb(0 0 0 / .62); color: #fff; padding: 3px 4px; border-radius: 4px; }
+.th .ok { position: absolute; right: 4px; top: 4px; font: 700 10px/1 var(--f-mono); background: var(--sz); color: var(--sz-ink); padding: 3px 4px; border-radius: 4px; }
+.th .sw { position: absolute; right: 4px; bottom: 4px; border: 0; border-radius: 5px; font-size: 11px; font-weight: 700; padding: 4px 6px; background: rgb(0 0 0 / .66); color: #fff; cursor: pointer; }
+.th .sw:hover { background: rgb(0 0 0 / .85); }
+
+/* ---------- guía y viralizar ---------- */
+.doc { display: grid; gap: 18px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; display: grid; gap: 12px; min-width: 0; }
+.card h3 { font-size: 20px; font-weight: 750; font-stretch: 106%; }
+.card p, .card li { max-width: 72ch; }
+.card ul, .card ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.formula { display: grid; gap: 8px; counter-reset: f; }
+.formula > div { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); }
+.formula b { font-size: 14px; }
+.formula code { font: 400 12.5px/1.55 var(--f-mono); overflow-wrap: anywhere; }
+.yes-no { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.yes-no > div { border-radius: 8px; padding: 12px; border: 1px solid var(--line); }
+.yes-no .y { background: var(--sz-soft); }
+.yes-no .n { background: var(--c-sexy-soft); }
+.yes-no h4 { font-size: 13px; font-family: var(--f-mono); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+.yes-no p { font: 400 12.5px/1.6 var(--f-mono); overflow-wrap: anywhere; }
+.links { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- toast y visor ---------- */
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 9px 14px; border-radius: 9px; font-size: 13.5px; font-weight: 600; z-index: 50; box-shadow: var(--shadow); max-width: calc(100vw - 32px); }
+.lb { position: fixed; inset: 0; z-index: 40; background: rgb(0 0 0 / .82); display: grid; place-items: center; padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
+.lb-in { display: grid; gap: 10px; justify-items: center; max-height: 100%; }
+.lb img { max-width: min(92vw, 560px); max-height: 78vh; border-radius: 10px; object-fit: contain; }
+.lb .row { justify-content: center; }
+
+@media (max-width: 860px) {
+  .two, .yes-no { grid-template-columns: 1fr; }
+  .formula > div { grid-template-columns: 1fr; gap: 4px; }
+}
+@media (max-width: 680px) {
+  .sum { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sum div:nth-child(2) { border-right: 0; }
+  .sum div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .ficha { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 12px; }
+  .dl { grid-template-columns: 1fr; gap: 2px; }
+  .dl dd { margin-bottom: 8px; }
+  .toma-in { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 12px; }
+  .shot .ideal { font-size: 11px; padding: 8px; }
+  .estados { margin-left: 0; width: 100%; }
+  .estados button { flex: 1 1 auto; }
+}
+@media (max-width: 440px) {
+  .wordmark small { display: none; }
+  .toma-in { grid-template-columns: 1fr; }
+  .shot { grid-template-columns: 88px minmax(0, 1fr); align-items: start; }
+  .shot small { align-self: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <span class="wordmark">Estudio SZ<small>reels · Kling 3.0</small></span>
+      <span class="pill" id="sync"><i></i><span>conectando…</span></span>
+    </div>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#modelos" data-v="modelos">Modelos</a>
+      <a href="#escanear" data-v="escanear">Escanear disco</a>
+      <a href="#guia" data-v="guia">Guía Kling 3.0</a>
+      <a href="#viral" data-v="viral">Viralizar</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- MODELOS -->
+  <section class="view" id="v-modelos">
+    <div>
+      <p class="eyebrow">Carpeta 01_MODELOS</p>
+      <h1 class="h-view">Tus modelos y sus 20 reels</h1>
+    </div>
+    <div id="modelos-body">
+      <div class="grid-m"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
+    </div>
+  </section>
+
+  <!-- UNA MODELO -->
+  <section class="view" id="v-modelo" hidden></section>
+
+  <!-- ESCANEAR -->
+  <section class="view" id="v-escanear" hidden>
+    <div>
+      <p class="eyebrow">Desde la compu · Chrome o Edge</p>
+      <h1 class="h-view">Escanear el disco</h1>
+    </div>
+    <p class="lede">Elegí tu carpeta <b>01_MODELOS</b>. La página cuenta todas las carpetas y fotos, elige 20 fotos distintas de cada modelo y, cuando vos le digas, las sube a la nube para escribir un prompt a medida de cada foto. Las fotos no salen de tu compu hasta que tocás «Subir».</p>
+    <div class="step">
+      <div class="step-h"><span class="tk">PASO 1</span><h3>Elegí la carpeta</h3></div>
+      <div class="row">
+        <input type="file" id="pick-dir" webkitdirectory directory multiple hidden>
+        <label for="pick-dir" class="btn primary">Elegir carpeta 01_MODELOS</label>
+        <span class="note">Chrome te va a preguntar si querés «subir» los archivos: es solo para que la página los lea, no sube nada.</span>
+      </div>
+      <div class="drop" id="drop">…o arrastrá la carpeta acá</div>
+      <p class="note" id="scan-status"></p>
+    </div>
+    <div class="step" id="st-2" hidden></div>
+    <div class="step" id="st-3" hidden></div>
+  </section>
+
+  <!-- GUÍA -->
+  <section class="view doc" id="v-guia" hidden>
+    <div>
+      <p class="eyebrow">Imagen a video · 7 s · 9:16 · sin sonido</p>
+      <h1 class="h-view">Guía Kling 3.0 para que parezcan reales</h1>
+    </div>
+
+    <div class="card">
+      <h3>Ajustes para cada reel</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tbody>
+            <tr><th>Modo</th><td><b>Imagen a video</b>. La foto de ella es el primer frame: es lo que más realismo e identidad da.</td></tr>
+            <tr><th>Modelo</th><td>Kling 3.0</td></tr>
+            <tr><th>Duración</th><td>7 segundos</td></tr>
+            <tr><th>Formato</th><td>9:16 (vertical)</td></tr>
+            <tr><th>Calidad</th><td>Pro (1080p) si tu plan ilimitado lo incluye; si no, Standard.</td></tr>
+            <tr><th>Sonido</th><td><b>Apagado</b>. Con el audio nativo prendido, Kling 3.0 inventa voces y las hace hablar.</td></tr>
+            <tr><th>Multi-shot</th><td>Apagado: una sola toma.</td></tr>
+            <tr><th>Último frame</th><td>En los reels marcados <b>LOOP</b>, subí la misma foto como frame final: el video vuelve al inicio y queda en loop perfecto.</td></tr>
+            <tr><th>Negativo</th><td>Si tu pantalla tiene «negative prompt», pegá el de abajo.</td></tr>
+            <tr><th>Variantes</th><td>Con ilimitado, generá 2 o 3 de cada reel y quedate con la más natural.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="links">
+        <a class="btn sm" href="https://app.klingai.com/global/" target="_blank" rel="noopener">Abrir Kling ↗</a>
+        <a class="btn sm" href="https://higgsfield.ai/" target="_blank" rel="noopener">Abrir Higgsfield ↗</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>La fórmula del prompt</h3>
+      <p>Cada prompt de este estudio tiene los mismos siete bloques, en este orden. Kling le da más peso a lo que va primero, por eso arranca con la acción. Todo está escrito en positivo: si escribís «no slow motion», el modelo igual puede leer «slow motion». Lo que no querés va en el negative prompt.</p>
+      <div class="formula">
+        <div><b>1 · Una acción lenta</b><code>She slowly shifts her gaze to the lens and gives a small, closed-mouth smile.</code></div>
+        <div><b>2 · La cámara</b><code>Filmed handheld by a friend at eye level, with slight natural micro-shake at a fixed distance.</code></div>
+        <div><b>3 · Velocidad real</b><code>Everything moves at natural real-time speed: calm, smooth and unhurried, like a real phone video.</code></div>
+        <div><b>4 · Boca cerrada</b><code>Her lips stay softly closed the whole time; she doesn't speak.</code></div>
+        <div><b>5 · Identidad</b><code>Her face, hair and outfit stay exactly as in the photo.</code></div>
+        <div><b>6 · Textura RAW</b><code>Raw, unedited iPhone video: natural available light, true-to-life unretouched skin with visible pores and flyaway hairs, realistic hair and fabric physics.</code></div>
+        <div><b>7 · Una sola toma</b><code>One continuous single take.</code></div>
+      </div>
+      <div class="row">
+        <button class="btn sm" data-copy-sel="#cola-text">Copiar bloques 3 a 7</button>
+        <span class="note">Para pegar al final de cualquier acción tuya.</span>
+      </div>
+      <p class="mono" id="cola-text" hidden>Everything moves at natural real-time speed: calm, smooth and unhurried, like a real phone video. Her lips stay softly closed the whole time; she doesn't speak. Her face, hair and outfit stay exactly as in the photo. Raw, unedited iPhone video: natural available light, true-to-life unretouched skin with visible pores and flyaway hairs, realistic hair and fabric physics. One continuous single take.</p>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>Por qué se mueven rápido y cómo frenarlo</h3>
+        <ul>
+          <li>Kling llena los 7 segundos con lo que le pidas. Tres acciones salen apuradas: pedí <b>una acción principal y un gesto chico</b>.</li>
+          <li>Usá verbos suaves: <i>slowly, gently, calmly, relaxed, small</i>. Sacá <i>quickly, energetic, jumps, spins</i>.</li>
+          <li>No escribas «slow motion», ni siquiera para negarlo: sale en cámara lenta falsa. Escribí <b>natural real-time speed</b> y poné «slow motion» en el negativo.</li>
+          <li>Cámara quieta o de mano suave. Nada de <i>dynamic camera, orbit, zoom in, drone</i>.</li>
+          <li>Si igual sale acelerado: quitá una acción, poné la misma foto como último frame o subí a 8–10 s.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Que no hablen</h3>
+        <ul>
+          <li>Sonido <b>apagado</b> siempre.</li>
+          <li>En el prompt: <i>Her lips stay softly closed the whole time; she doesn't speak</i>. Para sonrisas: <i>closed-mouth smile</i>.</li>
+          <li>Evitá verbos de boca: <i>says, talks, laughs out loud, sings, blows, yawns, bites</i>.</li>
+          <li>En el negativo: <i>talking, lip sync, singing, open mouth</i>.</li>
+          <li>Si la foto la muestra con la boca abierta, elegí otra: Kling tiende a «hacerla hablar».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Palabras que dan realismo y palabras que lo matan</h3>
+      <div class="yes-no">
+        <div class="y"><h4>Sí</h4><p>raw unedited iPhone video · natural available light · real skin texture · visible pores · flyaway hairs · slight handheld micro-shake · auto exposure · candid · everyday</p></div>
+        <div class="n"><h4>No</h4><p>cinematic · 4K · 8K · masterpiece · ultra detailed · perfect skin · flawless · stunning · beautiful · studio lighting · bokeh · color grading · slow motion</p></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>Bailes que no parezcan de IA</h3>
+        <ul>
+          <li>Con texto: movimientos chicos. Vaivén, pasito al costado, hombros. <i>casual, not choreographed</i>.</li>
+          <li>La foto tiene que ser de cuerpo entero o 3/4, de pie. Con una selfie de cara solo sale «hombritos».</li>
+          <li><b>Trend exacto:</b> usá <b>Motion Control</b> (transferencia de movimiento de Kling 3.0). Subís la foto de cuerpo entero y un video de 5 a 7 s de una persona real haciendo el baile: grabalo vos o una amiga, vertical, cuerpo entero, fondo simple, sin giros completos.</li>
+          <li>Con el audio del trend original agregado después en TikTok o Instagram.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Si no tenés la foto de inicio</h3>
+        <ul>
+          <li>Cada reel trae un «prompt para crear la foto». Usalo en tu generador de imágenes con 2 o 3 fotos de su cara como referencia.</li>
+          <li>Primero la foto, después el video: queda mucho más real que texto a video.</li>
+          <li>Pedí siempre <i>candid raw iPhone photo</i>, luz natural y piel con textura.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Problemas comunes</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Pasa esto</th><th>Hacé esto</th></tr></thead>
+          <tbody>
+            <tr><td>La cara cambia a mitad del video</td><td>Giros de cabeza más chicos, foto más nítida y de frente, y el bloque de identidad al principio del prompt.</td></tr>
+            <tr><td>Piel de plástico</td><td>Sacá palabras de belleza, agregá <i>unretouched skin, visible pores</i> y usá la foto original, no una captura comprimida.</td></tr>
+            <tr><td>Manos o dedos raros</td><td>Acciones sin dedos complicados y manos lejos de la cara. Objetos simples (una taza, anteojos).</td></tr>
+            <tr><td>Se mueve de más o apurada</td><td>Una sola acción, cámara fija y nada de «dance energetically».</td></tr>
+            <tr><td>Habla o mueve la boca</td><td>Sonido apagado, boca cerrada en el prompt, negativo con <i>talking, lip sync</i>.</td></tr>
+            <tr><td>Aparecen textos o subtítulos</td><td>Poné <i>text, subtitles, captions</i> en el negativo y no escribas nada entre comillas en el prompt.</td></tr>
+            <tr><td>Corta a otra toma</td><td>Multi-shot apagado y <i>one continuous single take</i>.</td></tr>
+            <tr><td>Le cambia la ropa</td><td><i>outfit stays exactly as in the photo</i> y nada de viento fuerte.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Negative prompt</h3>
+      <div class="box">
+        <div class="box-h"><span>Pegalo en «negative prompt»</span><button class="btn sm" data-copy-sel="#neg-text">Copiar</button></div>
+        <pre class="prompt" id="neg-text">talking, speaking, lip sync, singing, mouth moving, open mouth, fast motion, sped up, timelapse, jerky movement, sudden movements, slow motion, morphing, face changing, identity change, distorted face, warped body, extra fingers, deformed hands, plastic skin, airbrushed skin, beauty filter, CGI, 3D render, cartoon, anime, doll-like, glossy, oversaturated, cinematic color grading, text, subtitles, captions, watermark, logo, cuts, multiple shots</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Reglas de la casa</h3>
+      <ul>
+        <li>Todas las modelos son mujeres adultas (21 años o más) en su ficha y en los prompts.</li>
+        <li>Sexy es actitud, mirada, outfit y hora dorada. Nada explícito: Kling lo bloquea e Instagram y TikTok lo esconden.</li>
+        <li>Solo personajes creados con IA, o personas que te dieron permiso por escrito para usar su cara.</li>
+        <li>Al publicar, activá la etiqueta de contenido con IA (ver Viralizar).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- VIRALIZAR -->
+  <section class="view doc" id="v-viral" hidden>
+    <div>
+      <p class="eyebrow">Instagram Reels · TikTok · YouTube Shorts</p>
+      <h1 class="h-view">Cómo viralizar reels de 7 segundos</h1>
+    </div>
+
+    <div class="card">
+      <h3>La lógica de los 7 segundos</h3>
+      <p>Un video corto que se ve dos o tres veces tiene más del 100% de retención, y eso es lo que el algoritmo empuja. Tres reglas:</p>
+      <ol>
+        <li><b>Movimiento desde el frame 1.</b> Nada de intro: la acción arranca apenas empieza.</li>
+        <li><b>Texto gancho desde el segundo 0.</b> Cada reel trae su «texto en pantalla».</li>
+        <li><b>Termina donde empieza.</b> Los reels con LOOP usan la misma foto como último frame y se repiten sin corte.</li>
+      </ol>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>Edición en CapCut (2 minutos)</h3>
+        <ol>
+          <li>Importá el clip de Kling. Velocidad 1.0x, no lo aceleres.</li>
+          <li>Texto gancho arriba o al centro, grande, fuera del 20% de abajo y del borde derecho (ahí van los botones).</li>
+          <li>Sin música en CapCut: la canción agregala en Instagram o TikTok desde «tendencias», así suma al audio y tiene licencia.</li>
+          <li>Exportá 1080×1920, 30 fps, sin marca de agua.</li>
+          <li>Opcional: uní 3 reels de la misma modelo en uno de 21 s para una «serie».</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Fórmulas de gancho</h3>
+        <ul>
+          <li><b>POV:</b> «POV: coincidimos en el subte».</li>
+          <li><b>Día X de…:</b> «Día 2: mi primer mate». Arma serie y la gente vuelve.</li>
+          <li><b>Pregunta binaria:</b> «¿dulce o amargo?», «¿Boca o River?». Genera comentarios.</li>
+          <li><b>Puntuá:</b> «rate the fit del 1 al 10».</li>
+          <li><b>Adiviná:</b> «adiviná en qué ciudad estoy».</li>
+          <li><b>Choque cultural:</b> japonesa o coreana descubriendo Argentina. Es tu mejor carta: sorprende y se comparte.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Calendario: 20 reels = 3 semanas por modelo</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Semana</th><th>Qué publicar</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Reels 1 a 7, uno por día. El número de cada toma ya es el orden sugerido: mezcla sexy, normal y baile.</td></tr>
+            <tr><td>2</td><td>Reels 8 a 14. Antes, mirá cuál de la semana 1 anduvo mejor y hacé 2 variantes de ese formato.</td></tr>
+            <tr><td>3</td><td>Reels 15 a 20 + el mejor del mes repostado en Stories con una encuesta.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Horarios para Argentina: <b>12 a 14 h</b> y <b>20 a 23 h</b>. Subí el mismo archivo limpio a Instagram, TikTok y Shorts, nunca con la marca de agua de otra red.</p>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>Una cuenta por modelo</h3>
+        <ul>
+          <li>Foto de perfil: su CARA. Bio con nombre, ciudad y «creadora digital con IA ✨».</li>
+          <li>Antes de empujar: 3 fotos + 6 reels en el perfil, para que quien entra la «conozca».</li>
+          <li>Colabs: usá «Invitar colaboradora» de Instagram entre tus modelos, sobre todo con las fotos de dúos. El reel aparece en las dos cuentas.</li>
+          <li>Respondé comentarios en los primeros 30 minutos y fijá uno con una pregunta.</li>
+          <li>A los mejores comentarios, respondé con otro reel de 7 s.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Qué mirar en las estadísticas</h3>
+        <ul>
+          <li><b>Retención a 3 s:</b> si es baja, cambiá el texto gancho.</li>
+          <li><b>Tiempo promedio visto:</b> más de 7 s significa que el loop funciona.</li>
+          <li><b>Envíos / compartidos:</b> la señal número uno de Instagram.</li>
+          <li><b>Guardados y seguidores por reel.</b> Los likes importan poco.</li>
+          <li>Cada semana: los 3 mejores → 3 variantes para cada modelo. Los peores → otro gancho, una sola vez.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Lo que te hunde el alcance</h3>
+      <ul>
+        <li>Contenido demasiado sugerente: Instagram lo saca de Explorar y de Reels para quien no te sigue.</li>
+        <li>No etiquetar la IA. TikTok pide activar «Contenido generado por IA» en videos realistas y puede bajarlos; en Instagram activá la etiqueta de IA en la configuración avanzada al publicar. Muchas cuentas virtuales crecen siendo transparentes.</li>
+        <li>El mismo video en varias cuentas, marcas de agua, texto chiquito y 30 hashtags. Usá 3 a 5.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" hidden></div>
+<div class="lb" id="lb" hidden></div>
+
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pad2 = n => String(n).padStart(2, '0');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const nf = new Intl.NumberFormat('es-AR');
+const fmtBytes = b => b >= 1e9 ? (b / 1e9).toFixed(1).replace('.', ',') + ' GB' : b >= 1e6 ? (b / 1e6).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(b / 1e3)) + ' KB';
+const slugify = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'sin-nombre';
+const now = () => new Date().toISOString();
+
+const CATS = { sexy: 'Sexy', baile: 'Baile', normal: 'Normal' };
+const ESTADOS = [['pendiente', 'Pendiente'], ['generado', 'Generado'], ['editado', 'Editado'], ['publicado', 'Publicado']];
+const NEGATIVE = $('#neg-text').textContent.trim();
+const IMG_OK = /\.(jpe?g|jfif|png|webp|avif|bmp)$/i;
+const IMG_ANY = /\.(jpe?g|jfif|png|webp|avif|bmp|heic|heif|tiff?|gif)$/i;
+const VID = /\.(mp4|mov|m4v|webm|avi|mkv|wmv)$/i;
+const JUNK = /^(thumbs\.db|desktop\.ini|\.ds_store)$|^\._/i;
+const CARA_RX = /(^|[\s_\-.()])(cara|face|rostro|portada|cover|perfil|avatar)([\s_\-.()\d]|$)/i;
+const CAMERA = {
+  selfie: "Front-camera selfie video held at arm's length; the frame drifts gently with her arm.",
+  amiga: 'Filmed handheld by a friend at eye level, with slight natural micro-shake at a fixed distance.',
+  fijo: 'Phone propped on a steady surface; locked-off static framing.',
+  espejo: 'Mirror video: she holds her phone at chest height and films her own reflection.'
+};
+
+const S = {
+  db: null, assets: null, sample: null, downloads: null,
+  capsReady: false, offline: false, dbError: '',
+  modelos: new Map(), reels: new Map(), fotos: new Map(), inv: new Map(),
+  loaded: { modelos: false, reels: false, fotos: false, inv: false },
+  filtro: { cat: 'todas', estado: 'todos' },
+  editFicha: '',
+  assetUrls: new Map(),
+  scan: null,
+  sel: new Map(),
+  checked: new Set(),
+  busy: '',
+  stop: false,
+  ctl: null
+};
+
+/* ---------------- utilidades de interfaz ---------------- */
+let toastTimer = 0;
+function toast(msg, ms = 2600) {
+  const t = $('#toast');
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.hidden = true; }, ms);
+}
+
+async function copyText(text, btn) {
+  const done = () => {
+    if (!btn) return;
+    const old = btn.dataset.label || btn.textContent;
+    btn.dataset.label = old;
+    btn.textContent = 'Copiado ✓'; btn.classList.add('done');
+    setTimeout(() => { btn.textContent = old; btn.classList.remove('done'); }, 1600);
+  };
+  try {
+    await navigator.clipboard.writeText(text);
+    done();
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.opacity = '0'; ta.style.left = '0'; ta.style.top = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch { ok = false; }
+    ta.remove();
+    if (ok) done(); else toast('No pude copiar solo: mantené apretado el texto para copiarlo.');
+  }
+}
+
+async function saveFile(filename, data) {
+  if (!S.downloads) { toast('Las descargas solo funcionan abriendo la página desde claude.ai.'); return false; }
+  try {
+    await S.downloads.save({ filename, data });
+    return true;
+  } catch (e) {
+    if (e?.code !== 'declined') toast('No se pudo guardar el archivo (' + (e?.code || 'error') + ').');
+    return false;
+  }
+}
+
+function assetUrl(id) { return S.assetUrls.get(id) || ('/_blob/' + id); }
+
+/* ---------------- datos ---------------- */
+const modelList = () => [...S.modelos.entries()].map(([id, m]) => ({ id, ...m }))
+  .sort((a, b) => (a.orden ?? 99) - (b.orden ?? 99) || String(a.nombre).localeCompare(String(b.nombre)));
+const reelsOf = slug => [...S.reels.entries()].filter(([, r]) => r.modelo === slug)
+  .map(([id, r]) => ({ id, ...r })).sort((a, b) => (a.n ?? 0) - (b.n ?? 0));
+const fotosOf = slug => [...S.fotos.entries()].filter(([, f]) => f.modelo === slug)
+  .map(([id, f]) => ({ id, ...f })).sort((a, b) => (a.n ?? 0) - (b.n ?? 0));
+const initials = name => String(name || '?').split(/\s+/).map(w => w[0] || '').join('').slice(0, 2).toUpperCase();
+
+function fotoPrompt(m, r) {
+  if (!r.fotoEN) return '';
+  const look = m?.lookEN ? ` (${m.lookEN})` : '';
+  return `Same woman as in the reference photos${look}. Candid, raw vertical 9:16 iPhone photo: ${r.fotoEN}. Natural available light, real skin texture with visible pores, no beauty filter, no studio look.`;
+}
+
+function reelText(m, r) {
+  const lines = [
+    `REEL ${pad2(r.n)} · ${(CATS[r.cat] || r.cat || '').toUpperCase()} · ${r.titulo || ''}`,
+    `Idea: ${r.idea || ''}`,
+    r.foto ? `Foto de inicio: foto ${pad2(r.foto)}${r.ruta ? ' (' + r.ruta + ')' : ''}` : `Foto ideal: ${r.fotoIdeal || ''}`,
+    `Ajustes: Kling 3.0 · imagen a video · 7 s · 9:16 · sonido OFF${r.loop ? ' · último frame = misma foto (loop)' : ''}`,
+    `Prompt: ${r.prompt || ''}`,
+    `Texto en pantalla: ${r.hook || ''}`,
+    `Caption: ${r.caption || ''}`,
+    `Audio: ${r.audio || ''}`
+  ];
+  return lines.join('\n');
+}
+
+/* ---------------- capacidades y suscripciones ---------------- */
+function use(name) {
+  try {
+    if (window.claude && typeof window.claude.use === 'function') return window.claude.use(name).catch(() => null);
+  } catch { /* sin runtime */ }
+  return Promise.resolve(null);
+}
+
+async function initCaps() {
+  const [db, assets, sample, downloads] = await Promise.all([use('db'), use('assets'), use('sample'), use('downloads')]);
+  Object.assign(S, { db, assets, sample, downloads, capsReady: true, offline: !db });
+  if (db) subscribe();
+  schedule();
+}
+
+function subscribe() {
+  const sub = (coll, key) => {
+    try {
+      S.db.collection(coll).limit(1000).onSnapshot(snap => {
+        const m = new Map();
+        for (const d of snap.docs) m.set(d.id, d.data());
+        S[key] = m; S.loaded[key] = true;
+        schedule();
+      }, err => { S.dbError = err?.code || 'error'; S.loaded[key] = true; schedule(); });
+    } catch (e) { S.dbError = e?.code || 'error'; S.loaded[key] = true; }
+  };
+  sub('modelos', 'modelos'); sub('reels', 'reels'); sub('fotos', 'fotos'); sub('inventario', 'inv');
+}
+
+async function dbWrite(path, data, mode = 'set') {
+  if (!S.db) throw { code: 'offline' };
+  const ref = S.db.doc(path);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try { return mode === 'update' ? await ref.update(data) : await ref.set(data); }
+    catch (e) {
+      if (e?.code === 'unavailable' && attempt === 0) { await sleep(400 + Math.random() * 600); continue; }
+      throw e;
+    }
+  }
+}
+function dbFail(e) {
+  const c = e?.code;
+  if (c === 'invalid_argument') toast('No tenés permiso para cambiar esto, o el dato no es válido.');
+  else if (c === 'quota_exceeded') toast('Se llenó el espacio de datos de la página.');
+  else if (c === 'offline') toast('Abrí la página desde claude.ai para guardar cambios.');
+  else toast('No se pudo guardar (' + (c || 'error') + '). Probá de nuevo.');
+}
+
+/* ---------------- render ---------------- */
+let rafPending = false, dirty = false;
+function schedule() {
+  if (rafPending) return;
+  rafPending = true;
+  requestAnimationFrame(() => {
+    rafPending = false;
+    const a = document.activeElement;
+    if (a && a.matches('input:not([type=checkbox]):not([type=file]), textarea') && $('#main').contains(a)) { dirty = true; return; }
+    render();
+  });
+}
+document.addEventListener('focusout', () => { if (dirty) { dirty = false; setTimeout(schedule, 0); } });
+
+function route() {
+  const h = location.hash.replace(/^#/, '');
+  if (h.startsWith('m-')) return { view: 'modelo', slug: h.slice(2) };
+  if (['escanear', 'guia', 'viral'].includes(h)) return { view: h };
+  return { view: 'modelos' };
+}
+window.addEventListener('hashchange', () => { render(); window.scrollTo(0, 0); });
+
+function syncPill() {
+  const p = $('#sync'), t = p.querySelector('span');
+  p.classList.remove('ok', 'warn');
+  if (!S.capsReady) t.textContent = 'conectando…';
+  else if (S.offline) { p.classList.add('warn'); t.textContent = 'sin nube'; }
+  else if (S.dbError) { p.classList.add('warn'); t.textContent = 'error de nube'; }
+  else if (S.busy) { p.classList.add('ok'); t.textContent = S.busy; }
+  else { p.classList.add('ok'); t.textContent = 'en la nube'; }
+}
+
+function render() {
+  const r = route();
+  const tab = r.view === 'modelo' ? 'modelos' : r.view;
+  $$('.nav a').forEach(a => a.classList.toggle('on', a.dataset.v === tab));
+  for (const v of ['modelos', 'modelo', 'escanear', 'guia', 'viral']) $('#v-' + v).hidden = v !== r.view;
+  syncPill();
+  if (r.view === 'modelos') renderModelos();
+  else if (r.view === 'modelo') renderModelo(r.slug);
+  else if (r.view === 'escanear') renderEscanear();
+}
+
+function faceHTML(m, big) {
+  const img = m.cara ? `<img src="${esc(assetUrl(m.cara))}" alt="" loading="lazy">` : esc(initials(m.nombre));
+  return `<div class="face${big ? ' big' : ''}">${img}${m.cara ? '<span class="cara">CARA</span>' : ''}</div>`;
+}
+
+function waitingHTML() {
+  if (!S.capsReady || (S.db && !S.loaded.modelos)) {
+    return '<div class="grid-m"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div><p class="note">Cargando tus modelos desde la nube…</p>';
+  }
+  if (S.offline) {
+    return `<div class="empty"><h3>Abrí esta página desde claude.ai</h3><p class="note">Tus modelos, fotos y reels viven en la nube de esta página. Afuera de claude.ai no hay datos para mostrar. La guía y el plan para viralizar sí funcionan.</p><div class="row"><a class="btn" href="#guia">Ver la guía</a><a class="btn" href="#viral">Ver cómo viralizar</a></div></div>`;
+  }
+  return '';
+}
+
+function renderModelos() {
+  const box = $('#modelos-body');
+  const wait = waitingHTML();
+  if (wait) { box.innerHTML = wait; return; }
+  const ms = modelList();
+  if (!ms.length) {
+    box.innerHTML = `<div class="empty"><h3>Todavía no hay modelos</h3><p class="note">Escaneá tu carpeta 01_MODELOS desde la compu para empezar.</p><a class="btn primary" href="#escanear">Escanear el disco</a></div>`;
+    return;
+  }
+  const all = [...S.reels.values()];
+  const cnt = e => all.filter(r => (r.estado || 'pendiente') === e).length;
+  const gen = cnt('generado') + cnt('editado') + cnt('publicado');
+  const pub = cnt('publicado');
+  const nFotos = S.fotos.size;
+  const conFoto = all.filter(r => r.origen === 'foto').length;
+  let next;
+  if (!nFotos) next = `<p><b>Siguiente paso:</b> desde la compu, escaneá el disco para elegir 20 fotos de cada modelo y subirlas. Mientras tanto ya podés generar con las ideas de cada toma: cada una dice qué foto usar.</p><a class="btn primary" href="#escanear">Escanear el disco</a>`;
+  else if (conFoto < nFotos) next = `<p><b>Siguiente paso:</b> hay ${nf.format(nFotos)} fotos en la nube y ${nf.format(conFoto)} reels con prompt a medida. Tocá «Escribir prompts» en Escanear, o pedile a Emily en el chat que los escriba.</p><a class="btn primary" href="#escanear">Escribir prompts</a>`;
+  else next = `<p><b>Siguiente paso:</b> abrí una modelo, copiá el prompt de la toma 01, generala en Kling y marcala como «Generado».</p><a class="btn" href="#guia">Ajustes de Kling</a>`;
+  const cards = ms.map(m => {
+    const rs = reelsOf(m.id);
+    const cells = Array.from({ length: 20 }, (_, i) => { const r = rs.find(x => x.n === i + 1); return `<i class="${esc(r?.estado || 'pendiente')}"></i>`; }).join('');
+    const g = rs.filter(r => ['generado', 'editado', 'publicado'].includes(r.estado)).length;
+    const p = rs.filter(r => r.estado === 'publicado').length;
+    const inv = S.inv.get(m.id);
+    const fc = fotosOf(m.id).length;
+    const stats = [`${rs.length} reels`, `${g} generados`, `${p} publicados`];
+    if (fc) stats.push(`${fc} fotos en la nube`);
+    if (inv?.fotos) stats.push(`${nf.format(inv.fotos)} en disco`);
+    return `<a class="mcard" href="#m-${esc(m.id)}">${faceHTML(m)}<div class="mc-body"><h3>${esc(m.nombre)}</h3><p class="mc-est">${esc(m.estetica || '')}</p><div class="bar20" aria-label="Estado de los 20 reels">${cells}</div><p class="mc-stats">${esc(stats.join(' · '))}</p></div></a>`;
+  }).join('');
+  box.innerHTML = `
+    <div class="view">
+      <div class="sum">
+        <div><b>${ms.length}</b><span>modelos</span></div>
+        <div><b>${all.length}</b><span>reels planificados</span></div>
+        <div><b>${gen}</b><span>generados</span></div>
+        <div><b>${pub}</b><span>publicados</span></div>
+      </div>
+      <div class="next">${next}</div>
+      <div class="grid-m">${cards}</div>
+    </div>`;
+}
+
+function renderModelo(slug) {
+  const box = $('#v-modelo');
+  const wait = waitingHTML();
+  if (wait) { box.innerHTML = `<a class="back" href="#modelos">← Modelos</a>${wait}`; return; }
+  const raw = S.modelos.get(slug);
+  if (!raw) { box.innerHTML = `<a class="back" href="#modelos">← Modelos</a><div class="empty"><h3>No encuentro esa modelo</h3><p class="note">Puede que la hayan renombrado o borrado.</p></div>`; return; }
+  const m = { id: slug, ...raw };
+  const rs = reelsOf(slug);
+  const fotos = new Map(fotosOf(slug).map(f => [f.n, f]));
+  const f = S.filtro;
+  const count = (k, v) => rs.filter(r => k === 'cat' ? (v === 'todas' || r.cat === v) : (v === 'todos' || (r.estado || 'pendiente') === v)).length;
+  const vis = rs.filter(r => (f.cat === 'todas' || r.cat === f.cat) && (f.estado === 'todos' || (r.estado || 'pendiente') === f.estado));
+  const pil = (m.pilares || []).map(p => `<span class="chip">${esc(p)}</span>`).join('');
+
+  const fichaView = S.editFicha === slug ? `
+    <div class="edit-grid">
+      <label>Edad (siempre 21 o más)<input id="f-edad" type="number" min="21" max="45" value="${esc(m.edad ?? '')}"></label>
+      <label>Look<textarea id="f-look" rows="2">${esc(m.look || '')}</textarea></label>
+      <label>Look en inglés (para prompts de fotos)<textarea id="f-lookEN" rows="2">${esc(m.lookEN || '')}</textarea></label>
+      <label>Estética<textarea id="f-estetica" rows="2">${esc(m.estetica || '')}</textarea></label>
+      <label>Pilares (separados por coma)<input id="f-pilares" type="text" value="${esc((m.pilares || []).join(', '))}"></label>
+      <label>Serie para viralizar<textarea id="f-serie" rows="2">${esc(m.serie || '')}</textarea></label>
+      <div class="row"><button class="btn primary" data-act="save-ficha" data-slug="${esc(slug)}">Guardar ficha</button><button class="btn ghost" data-act="cancel-ficha">Cancelar</button></div>
+    </div>` : `
+    <dl class="dl">
+      <dt>Look</dt><dd>${esc(m.look || '—')}</dd>
+      <dt>Estética</dt><dd>${esc(m.estetica || '—')}</dd>
+      <dt>Pilares</dt><dd><div class="chips">${pil || '—'}</div></dd>
+      <dt>Serie</dt><dd>${esc(m.serie || '—')}</dd>
+    </dl>
+    <div class="row">
+      <button class="btn sm" data-act="copy-all" data-slug="${esc(slug)}">Copiar los ${rs.length} reels</button>
+      <button class="btn sm" data-act="txt-all" data-slug="${esc(slug)}">Descargar .txt</button>
+      <button class="btn sm" data-copy-sel="#neg-text">Copiar negative prompt</button>
+      <button class="btn sm ghost" data-act="edit-ficha" data-slug="${esc(slug)}">Editar ficha</button>
+    </div>`;
+
+  const segCat = ['todas', 'sexy', 'baile', 'normal'].map(c => `<button class="${f.cat === c ? 'on' : ''}" data-fcat="${c}">${c === 'todas' ? 'Todas' : CATS[c]}<span class="n">${count('cat', c)}</span></button>`).join('');
+  const segEst = [['todos', 'Todos'], ...ESTADOS].map(([k, l]) => `<button class="${f.estado === k ? 'on' : ''}" data-fest="${k}">${l}<span class="n">${count('estado', k)}</span></button>`).join('');
+
+  const tomas = vis.map(r => {
+    const est = r.estado || 'pendiente';
+    const foto = r.foto ? fotos.get(r.foto) : null;
+    const asset = r.fotoAsset || foto?.asset;
+    const shot = asset
+      ? `<button class="ph" data-foto="${esc(asset)}" aria-label="Ver foto ${pad2(r.foto)} en grande"><img src="${esc(assetUrl(asset))}" alt="" loading="lazy"></button><small>Foto ${pad2(r.foto)}${foto?.ruta ? ' · ' + esc(foto.ruta) : ''}</small>`
+      : `<div class="ideal"><b>Foto ideal</b>${esc(r.fotoIdeal || 'Una foto suya que encaje con la idea')}</div>`;
+    const fp = fotoPrompt(m, r);
+    const specs = `<span>07 s</span><span>9:16</span><span class="hot">SONIDO OFF</span><span>PRO</span>${r.loop ? '<span class="hot">LOOP · MISMA FOTO AL FINAL</span>' : ''}`;
+    const baseBlock = r.base ? `<details class="more"><summary>Idea original de esta toma</summary><div class="lines"><div><span class="k">Idea</span><span class="v">${esc(r.base.idea || '')}</span></div><div><span class="k">Prompt</span><span class="v mono">${esc(r.base.prompt || '')}</span></div></div></details>` : '';
+    return `
+    <article class="toma" id="t-${esc(r.id)}">
+      <div class="slate">
+        <span class="tk">Toma ${pad2(r.n)}</span>
+        <span class="cat ${esc(r.cat)}">${esc(CATS[r.cat] || r.cat)}</span>
+        <h3>${esc(r.titulo || '')}</h3>
+        <div class="estados" role="group" aria-label="Estado">${ESTADOS.map(([k, l]) => `<button class="${est === k ? 'on' : ''}" data-estado="${k}" data-reel="${esc(r.id)}">${l}</button>`).join('')}</div>
+      </div>
+      <div class="toma-in">
+        <div class="shot">${shot}</div>
+        <div class="body">
+          ${r.alerta ? `<p class="alerta">⚠ ${esc(r.alerta)}</p>` : ''}
+          <p class="idea">${esc(r.idea || '')}</p>
+          <div class="box">
+            <div class="box-h"><span>Prompt Kling 3.0</span><button class="btn sm" data-copy-reel="${esc(r.id)}" data-field="prompt">Copiar prompt</button></div>
+            <pre class="prompt">${esc(r.prompt || '')}</pre>
+          </div>
+          <div class="specs">${specs}</div>
+          <div class="lines">
+            <div><span class="k">En pantalla</span><span class="v">${esc(r.hook || '')}</span><button class="btn sm ghost" data-copy-reel="${esc(r.id)}" data-field="hook">Copiar</button></div>
+            <div><span class="k">Caption</span><span class="v">${esc(r.caption || '')}</span><button class="btn sm ghost" data-copy-reel="${esc(r.id)}" data-field="caption">Copiar</button></div>
+            <div><span class="k">Audio</span><span class="v">${esc(r.audio || '')}</span></div>
+          </div>
+          ${fp && !asset ? `<details class="more"><summary>¿No tenés esta foto? Prompt para crearla</summary><div class="box"><div class="box-h"><span>Generador de imágenes · con su cara de referencia</span><button class="btn sm" data-copy-reel="${esc(r.id)}" data-field="fotoPrompt">Copiar</button></div><pre class="prompt">${esc(fp)}</pre></div></details>` : ''}
+          ${baseBlock}
+          ${est === 'publicado' ? `<label class="vistas">Vistas <input type="number" min="0" inputmode="numeric" id="v-${esc(r.id)}" data-vistas="${esc(r.id)}" value="${esc(r.vistas ?? '')}"></label>` : ''}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+
+  box.innerHTML = `
+    <a class="back" href="#modelos">← Modelos</a>
+    <div class="ficha">
+      ${faceHTML(m, true)}
+      <div class="f-info">
+        <div><p class="eyebrow">Ficha · personaje creado con IA</p><h2>${esc(m.nombre)}</h2></div>
+        <p class="f-meta">${m.edad ? esc(m.edad) + ' años (sugerida)' : 'Edad sin definir'} · ${rs.length} reels · ${fotos.size} fotos en la nube</p>
+        ${fichaView}
+      </div>
+    </div>
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="Categoría">${segCat}</div>
+      <div class="seg" role="group" aria-label="Estado">${segEst}</div>
+    </div>
+    <div class="reels">${tomas || '<div class="empty"><h3>Nada con ese filtro</h3><p class="note">Probá con «Todas» y «Todos».</p></div>'}</div>`;
+}
+
+/* ---------------- escáner ---------------- */
+function isMobileLike() { return !('webkitdirectory' in document.createElement('input')) || /Android|iPhone|iPad/i.test(navigator.userAgent); }
+
+function ingest(entries, rootHint) {
+  const clean = entries.filter(e => !JUNK.test(e.file.name));
+  if (!clean.length) { toast('La carpeta está vacía o no se pudo leer.'); return; }
+  const roots = new Set(clean.map(e => e.path.split('/')[0]));
+  const root = rootHint || [...roots][0];
+  const known = new Set(S.modelos.keys());
+  const withSub = clean.filter(e => e.path.split('/').length > 2).length;
+  const single = known.has(slugify(root)) || withSub === 0;
+  const folders = new Map();
+  const total = { fotos: 0, videos: 0, otros: 0, bytes: 0, archivos: clean.length };
+  const get = name => {
+    const slug = slugify(name);
+    if (!folders.has(slug)) folders.set(slug, { name, slug, fotos: [], videos: 0, otros: 0, bytes: 0, subs: {}, cara: null, names: [] });
+    return folders.get(slug);
+  };
+  for (const e of clean) {
+    const parts = e.path.split('/');
+    let fold, subParts;
+    if (single) { fold = get(root); subParts = parts.slice(1, -1); }
+    else if (parts.length <= 2) { fold = get('(sueltos en ' + root + ')'); subParts = []; }
+    else { fold = get(parts[1]); subParts = parts.slice(2, -1); }
+    const sub = subParts.join('/');
+    const rel = [...subParts, e.file.name].join('/');
+    fold.bytes += e.file.size; total.bytes += e.file.size;
+    if (fold.names.length < 1500) fold.names.push(rel);
+    const base = e.file.name.replace(/\.[^.]+$/, '');
+    if (IMG_ANY.test(e.file.name)) {
+      total.fotos++;
+      const isCara = CARA_RX.test(base) || /(^|\/)(cara|face|rostro)(\/|$)/i.test(sub);
+      if (isCara && IMG_OK.test(e.file.name) && !fold.cara) fold.cara = e.file;
+      fold.fotos.push({ file: e.file, rel, sub, sub1: subParts[0] || '', size: e.file.size, mtime: e.file.lastModified || 0 });
+      if (sub) fold.subs[sub] = (fold.subs[sub] || 0) + 1;
+    } else if (VID.test(e.file.name)) { fold.videos++; total.videos++; }
+    else { fold.otros++; total.otros++; }
+  }
+  const list = [...folders.values()].sort((a, b) => a.name.localeCompare(b.name, 'es'));
+  S.scan = { root, when: now(), total, folders: list };
+  S.sel.clear();
+  S.checked = new Set(list.filter(f => known.has(f.slug) || f.cara).map(f => f.slug));
+  renderEscanear();
+  toast(`Listo: ${list.length} carpetas y ${nf.format(total.fotos)} fotos.`);
+}
+
+$('#pick-dir').addEventListener('change', ev => {
+  const files = [...ev.target.files];
+  ingest(files.map(f => ({ file: f, path: f.webkitRelativePath || f.name })));
+  ev.target.value = '';
+});
+
+const drop = $('#drop');
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+drop.addEventListener('drop', async e => {
+  e.preventDefault(); drop.classList.remove('over');
+  const items = [...(e.dataTransfer?.items || [])].map(i => i.webkitGetAsEntry && i.webkitGetAsEntry()).filter(Boolean);
+  if (!items.length) { toast('Arrastrá una carpeta, no archivos sueltos.'); return; }
+  $('#scan-status').textContent = 'Leyendo la carpeta…';
+  const out = [];
+  const walk = async (entry, path) => {
+    if (entry.isFile) {
+      try { out.push({ file: await new Promise((res, rej) => entry.file(res, rej)), path: path + entry.name }); } catch { /* ilegible */ }
+    } else if (entry.isDirectory) {
+      const reader = entry.createReader();
+      let batch;
+      do {
+        batch = await new Promise((res, rej) => reader.readEntries(res, rej)).catch(() => []);
+        for (const c of batch) await walk(c, path + entry.name + '/');
+      } while (batch.length);
+    }
+  };
+  for (const it of items) await walk(it, '');
+  ingest(out, items.length === 1 && items[0].isDirectory ? items[0].name : '');
+});
+
+function spreadOrder(n) {
+  const seen = new Set(), out = [];
+  for (let k = 0; out.length < n && k < n * 4; k++) {
+    let v = 0, f = 0.5, i = k;
+    while (i) { if (i & 1) v += f; i >>= 1; f /= 2; }
+    const idx = Math.min(n - 1, Math.floor(v * n));
+    if (!seen.has(idx)) { seen.add(idx); out.push(idx); }
+  }
+  for (let i = 0; i < n; i++) if (!seen.has(i)) out.push(i);
+  return out;
+}
+function candidateOrder(fotos) {
+  const groups = new Map();
+  for (const c of fotos) { const k = c.sub1 || '·'; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(c); }
+  const lists = [...groups.values()].map(g => { g.sort((a, b) => a.mtime - b.mtime || a.rel.localeCompare(b.rel)); return spreadOrder(g.length).map(i => g[i]); });
+  const out = [];
+  for (let i = 0; lists.some(l => i < l.length); i++) for (const l of lists) if (i < l.length) out.push(l[i]);
+  return out;
+}
+
+const hashCanvas = document.createElement('canvas'); hashCanvas.width = 9; hashCanvas.height = 8;
+const hctx = hashCanvas.getContext('2d', { willReadFrequently: true });
+function popcnt(x) { x -= (x >>> 1) & 0x55555555; x = (x & 0x33333333) + ((x >>> 2) & 0x33333333); return (((x + (x >>> 4)) & 0x0F0F0F0F) * 0x01010101) >>> 24; }
+const ham = (a, b) => popcnt((a[0] ^ b[0]) >>> 0) + popcnt((a[1] ^ b[1]) >>> 0);
+
+async function decode(file) {
+  try { return await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch { return await createImageBitmap(file); }
+}
+async function measure(c) {
+  if (c.meta) return c.meta;
+  try {
+    const bmp = await decode(c.file);
+    const w = bmp.width, h = bmp.height;
+    hctx.drawImage(bmp, 0, 0, 9, 8);
+    const d = hctx.getImageData(0, 0, 9, 8).data;
+    const g = i => d[i * 4] * 0.299 + d[i * 4 + 1] * 0.587 + d[i * 4 + 2] * 0.114;
+    const hash = [0, 0];
+    for (let y = 0, bit = 0; y < 8; y++) for (let x = 0; x < 8; x++, bit++) {
+      if (g(y * 9 + x) > g(y * 9 + x + 1)) hash[bit >> 5] |= (1 << (bit & 31));
+    }
+    const tw = 240, th = Math.max(1, Math.round(tw * h / w));
+    const cv = document.createElement('canvas'); cv.width = tw; cv.height = th;
+    cv.getContext('2d').drawImage(bmp, 0, 0, tw, th);
+    bmp.close && bmp.close();
+    const blob = await new Promise(res => cv.toBlob(res, 'image/jpeg', 0.8));
+    c.meta = { w, h, hash, thumb: blob ? URL.createObjectURL(blob) : '' };
+  } catch { c.meta = { bad: true }; }
+  return c.meta;
+}
+
+async function pickFor(fold, N, onStep) {
+  const cands = fold.fotos.filter(c => IMG_OK.test(c.file.name) && c.size >= 40 * 1024 && c.file !== fold.cara);
+  const order = candidateOrder(cands);
+  const picked = [], wide = [], pool = [];
+  const maxLook = Math.min(order.length, Math.max(N * 4, 60));
+  const dup = m => picked.some(p => ham(p.meta.hash, m.hash) <= 10);
+  let i = 0;
+  for (; i < maxLook && (picked.length < N || pool.length < 12); i++) {
+    const c = order[i];
+    const m = await measure(c);
+    onStep && onStep(i + 1, maxLook);
+    if (m.bad || Math.min(m.w, m.h) < 600) continue;
+    if (dup(m)) continue;
+    if (m.w > m.h * 1.1) { wide.push(c); continue; }
+    if (picked.length < N) picked.push(c); else pool.push(c);
+  }
+  for (const c of wide) { if (picked.length >= N) { pool.push(c); continue; } if (!dup(c.meta)) picked.push(c); }
+  const rest = order.slice(i);
+  return { picked, pool: [...pool, ...rest], total: cands.length };
+}
+
+async function swapPick(slug, idx) {
+  const s = S.sel.get(slug);
+  if (!s || s.busy) return;
+  s.busy = true;
+  const out = s.picked[idx];
+  while (s.pool.length) {
+    const c = s.pool.shift();
+    const m = await measure(c);
+    if (m.bad || Math.min(m.w, m.h) < 600) continue;
+    if (s.picked.some((p, j) => j !== idx && ham(p.meta.hash, m.hash) <= 10)) continue;
+    s.picked[idx] = c;
+    s.dirtyIdx.add(idx);
+    break;
+  }
+  if (s.picked[idx] === out) toast('No quedan más fotos distintas en esta carpeta.');
+  s.busy = false;
+  renderEscanear();
+}
+
+async function pickChecked() {
+  if (!S.scan || S.busy) return;
+  const folds = S.scan.folders.filter(f => S.checked.has(f.slug));
+  if (!folds.length) { toast('Marcá al menos una modelo.'); return; }
+  S.busy = 'eligiendo fotos…'; syncPill();
+  for (const f of folds) {
+    S.sel.set(f.slug, { picked: [], pool: [], busy: true, progress: 'midiendo fotos…', dirtyIdx: new Set() });
+    renderEscanear();
+    const res = await pickFor(f, 20, (a, b) => {
+      const s = S.sel.get(f.slug); s.progress = `midiendo ${a}/${b}…`;
+      const el = $(`#prog-${f.slug}`); if (el) el.textContent = s.progress;
+    });
+    S.sel.set(f.slug, { picked: res.picked, pool: res.pool, total: res.total, busy: false, progress: '', dirtyIdx: new Set() });
+    renderEscanear();
+  }
+  S.busy = ''; syncPill(); renderEscanear();
+  toast('Listo. Revisá las fotos: tocá ↻ para cambiar una.');
+}
+
+async function saveInventory() {
+  if (!S.scan) return;
+  if (!S.db) { toast('Abrí la página desde claude.ai para guardar en la nube.'); return; }
+  S.busy = 'guardando inventario…'; syncPill();
+  try {
+    for (const f of S.scan.folders) {
+      await dbWrite('inventario/' + f.slug, {
+        nombre: f.name, fotos: f.fotos.length, videos: f.videos, otros: f.otros, bytes: f.bytes,
+        subcarpetas: f.subs, cara: !!f.cara, modelo: S.checked.has(f.slug), archivos: f.names, escaneado: S.scan.when
+      });
+      await sleep(30);
+    }
+    await dbWrite('inventario/_resumen', { raiz: S.scan.root, carpetas: S.scan.folders.length, ...S.scan.total, escaneado: S.scan.when });
+    toast('Inventario guardado en la nube.');
+  } catch (e) { dbFail(e); }
+  S.busy = ''; syncPill(); renderEscanear();
+}
+
+async function toJpeg(file, maxSide, q) {
+  const bmp = await decode(file);
+  const s = Math.min(1, maxSide / Math.max(bmp.width, bmp.height));
+  const w = Math.round(bmp.width * s), h = Math.round(bmp.height * s);
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+  cv.getContext('2d').drawImage(bmp, 0, 0, w, h);
+  bmp.close && bmp.close();
+  return await new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error('toBlob')), 'image/jpeg', q));
+}
+
+async function ensureModel(fold) {
+  if (S.modelos.has(fold.slug)) return;
+  await dbWrite('modelos/' + fold.slug, { nombre: fold.name, orden: 50 + S.modelos.size, edad: null, look: '', lookEN: '', estetica: '', pilares: [], serie: '' });
+}
+
+async function uploadModel(slug) {
+  const fold = S.scan?.folders.find(f => f.slug === slug);
+  const s = S.sel.get(slug);
+  if (!fold || !s?.picked.length) return;
+  if (!S.assets || !S.db) { toast('Para subir, abrí la página desde claude.ai con tu cuenta.'); return; }
+  const prev = new Map(fotosOf(slug).map(f => [f.n, f]));
+  try {
+    await ensureModel(fold);
+    const firma = fold.cara ? `${fold.cara.name}|${fold.cara.size}|${fold.cara.lastModified}` : '';
+    const mdoc = S.modelos.get(slug);
+    if (fold.cara && mdoc?.caraFirma !== firma) {
+      const cblob = await toJpeg(fold.cara, 640, 0.88);
+      const cres = await S.assets.upload(cblob, { type: 'image/jpeg' });
+      S.assetUrls.set(cres.id, cres.url);
+      await dbWrite('modelos/' + slug, { cara: cres.id, caraFirma: firma }, 'update');
+      if (mdoc?.cara && mdoc.cara !== cres.id) { try { await S.assets.delete(mdoc.cara); } catch { /* ya no estaba */ } }
+    }
+    for (let i = 0; i < s.picked.length; i++) {
+      if (S.stop) break;
+      const c = s.picked[i], n = i + 1, old = prev.get(n);
+      s.progress = `subiendo ${n}/${s.picked.length}…`;
+      const el = $(`#prog-${slug}`); if (el) el.textContent = s.progress;
+      if (old && old.ruta === c.rel) continue;
+      const blob = await toJpeg(c.file, 1440, 0.88);
+      const res = await S.assets.upload(blob, { type: 'image/jpeg' });
+      S.assetUrls.set(res.id, res.url);
+      await dbWrite(`fotos/${slug}-${pad2(n)}`, { modelo: slug, n, asset: res.id, ruta: c.rel, sub: c.sub, w: c.meta?.w || 0, h: c.meta?.h || 0, bytes: c.size, subida: now() });
+      if (old?.asset && old.asset !== res.id) { try { await S.assets.delete(old.asset); } catch { /* ya no estaba */ } }
+    }
+    s.progress = '';
+    return true;
+  } catch (e) {
+    s.progress = '';
+    const c = e?.code;
+    if (c === 'quota_or_state') toast('Se llenó el espacio de fotos de la página. Subí menos fotos o avisame.');
+    else if (c === 'rate_limited') toast('Muchas subidas seguidas. Esperá un minuto y tocá «Subir» otra vez: sigue donde quedó.');
+    else if (c === 'too_large') toast('Una foto es demasiado grande. Cambiala con ↻.');
+    else dbFail(e);
+    return false;
+  }
+}
+
+async function uploadAll() {
+  if (S.busy) return;
+  const slugs = [...S.sel.keys()].filter(k => S.sel.get(k).picked.length);
+  if (!slugs.length) { toast('Primero elegí las fotos.'); return; }
+  S.busy = 'subiendo fotos…'; S.stop = false; syncPill(); renderEscanear();
+  for (const slug of slugs) { const ok = await uploadModel(slug); renderEscanear(); if (ok === false || S.stop) break; }
+  S.busy = ''; syncPill(); renderEscanear();
+  if (!S.stop) toast('Fotos en la nube. Ahora podés escribir los prompts.');
+}
+
+async function zipModel(slug) {
+  const fold = S.scan?.folders.find(f => f.slug === slug);
+  const s = S.sel.get(slug);
+  if (!fold || !s?.picked.length) return;
+  if (!window.JSZip) {
+    try {
+      await new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js'; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
+    } catch { toast('No se pudo cargar el compresor ZIP.'); return; }
+  }
+  toast('Armando el ZIP…', 6000);
+  const zip = new window.JSZip();
+  const dir = zip.folder(fold.name);
+  s.picked.forEach((c, i) => { const ext = (c.file.name.match(/\.[^.]+$/) || ['.jpg'])[0].toLowerCase(); dir.file(`foto-${pad2(i + 1)}${ext}`, c.file); });
+  const m = S.modelos.get(slug);
+  const rs = reelsOf(slug);
+  if (rs.length) dir.file('reels.txt', rs.map(r => reelText(m, r)).join('\n\n'));
+  const blob = await zip.generateAsync({ type: 'blob', compression: 'STORE' });
+  await saveFile(`${slug}-20-fotos.zip`, blob);
+}
+
+/* ---------------- análisis con Claude ---------------- */
+function analysisPrompt(m, slug, items, free, nuevas) {
+  const lista = free.length
+    ? free.map(r => `- ${r.n} · ${r.cat} · ${r.titulo} · foto ideal: ${r.fotoIdeal || '-'}`).join('\n')
+    : '- (no hay ideas cargadas: inventá una idea por foto)';
+  const orden = items.map((it, i) => `imagen ${i + 1} = foto ${it.n}`).join(', ');
+  return `Sos director de fotografía y prompt engineer especializado en Kling 3.0 (imagen a video).
+Te paso ${items.length} fotos de ${m.nombre}, un personaje creado con IA: mujer adulta de ${m.edad || 23} años.
+Ficha: ${m.look || '-'}. Estética: ${m.estetica || '-'}.
+Cada foto va a ser el PRIMER FRAME de un reel vertical de 7 segundos en Kling 3.0 (9:16, sonido apagado).
+Orden de las imágenes: ${orden}.
+
+Reels libres para asignar (número · categoría · título · foto ideal):
+${lista}
+${nuevas ? `Números libres sin idea: ${nuevas.join(', ')}. Mezcla buscada en total: 7 sexy, 6 baile, 7 normal.\n` : ''}
+Para cada foto elegí el reel libre que mejor le queda (sin repetir números) y escribí el prompt adaptado a ESA foto. Si ninguna idea encaja, usá igual un número libre y proponé título e idea nuevos.
+
+Reglas del prompt (en inglés, 90 a 130 palabras, un solo párrafo):
+1. Empezá con UNA acción principal lenta y concreta y un gesto chico, posibles desde la pose exacta de la foto. No inventes objetos, ropa ni lugares que no están en la foto.
+2. Cámara según la foto: selfie → "${CAMERA.selfie}" · espejo → "${CAMERA.espejo}" · foto sacada por otra persona → "${CAMERA.amiga}" · foto de trípode → "${CAMERA.fijo}"
+3. Terminá siempre con estas frases, casi textuales: "Everything moves at natural real-time speed: calm, smooth and unhurried, like a real phone video." "Her lips stay softly closed the whole time; she doesn't speak." "Her face, hair and outfit stay exactly as in the photo." "Raw, unedited iPhone video: natural available light, true-to-life unretouched skin with visible pores and flyaway hairs, realistic hair and fabric physics." "One continuous single take." En los bailes cambiá la primera por: "She moves loosely at the song's real tempo with small, relaxed, low-energy moves, casual and a little imperfect, like a real person at home."
+4. Baile solo si se ve de cuerpo entero o 3/4 de pie; con primeros planos, baile de hombros y cabeza. Movimientos chicos y relajados, nada de coreografía perfecta.
+5. Escribí todo en positivo: no nombres lo que no querés (nada de "no slow motion", "no zoom", "no text"); eso va en el negative prompt.
+6. Sexy = seguridad, mirada, pelo, caminar, hora dorada, outfit. Nada explícito ni sexual, apto Instagram. Si la foto es demasiado sugerente o la persona podría parecer menor de edad, no hagas nada sexy: usá "normal" y avisalo en "alerta".
+7. Prohibido: cinematic, 4K, masterpiece, stunning, perfect skin, flawless, slow motion, dancing energetically.
+
+Devolvé SOLO un array JSON, un objeto por foto, en el mismo orden de las imágenes:
+[{"foto": 3, "reel": 5, "cat": "sexy", "titulo": "…", "idea": "una frase en español rioplatense", "prompt": "…en inglés…", "hook": "texto en pantalla de hasta 8 palabras", "caption": "caption corto con 3 hashtags", "audio": "tipo de audio en tendencia", "loop": false, "alerta": ""}]
+"cat" es "sexy", "baile" o "normal". "loop" es true solo si el movimiento puede volver a la pose inicial usando la misma foto como último frame. "alerta" va vacía, o avisa en pocas palabras si la foto tiene problemas (dos personas, texto, manos raras, baja calidad, recorte extremo).`;
+}
+
+async function photoBlob(slug, f) {
+  const s = S.sel.get(slug);
+  const local = s?.picked?.[f.n - 1];
+  if (local && local.rel === f.ruta) { try { return await toJpeg(local.file, 1280, 0.85); } catch { /* sigue con la nube */ } }
+  const r = await fetch('/_blob/' + f.asset);
+  if (!r.ok) throw { code: 'fetch_failed' };
+  return await r.blob();
+}
+
+async function analyzeModel(slug) {
+  if (!S.sample) { toast('Claude no está disponible en esta vista. Pedile a Emily en el chat que escriba los prompts.'); return false; }
+  const lim = await S.sample.limits().catch(() => null);
+  if (!lim?.images) { toast('Esta vista no puede mandarle fotos a Claude. Pedile a Emily en el chat que las analice.'); return false; }
+  const m = S.modelos.get(slug) || { nombre: slug };
+  const fotos = fotosOf(slug);
+  // copia local: la nube confirma las escrituras un rato después, así que no se relee entre tandas
+  const reelMap = new Map(reelsOf(slug).map(r => [r.n, r]));
+  const taken = new Set([...reelMap.values()].filter(r => r.origen === 'foto').map(r => r.n));
+  const done = new Set([...reelMap.values()].filter(r => r.origen === 'foto' && r.foto).map(r => r.foto));
+  const pending = fotos.filter(f => !done.has(f.n));
+  if (!pending.length) { toast(`${m.nombre}: todas las fotos ya tienen prompt.`); return true; }
+  const per = Math.max(1, Math.min(lim.images.maxCount || 1, 5));
+  const s = S.sel.get(slug) || {}; S.sel.set(slug, s);
+  const cut = (v, max) => String(v ?? '').slice(0, max);
+  for (let i = 0; i < pending.length; i += per) {
+    if (S.stop) break;
+    const chunk = pending.slice(i, i + per);
+    s.progress = `Claude mira las fotos ${chunk.map(c => pad2(c.n)).join(', ')}…`;
+    const el = $(`#aprog-${slug}`); if (el) el.textContent = s.progress;
+    const free = [...reelMap.values()].filter(r => !taken.has(r.n)).sort((a, b) => a.n - b.n);
+    const nuevas = Array.from({ length: 20 }, (_, k) => k + 1).filter(n => !reelMap.has(n) && !taken.has(n));
+    if (!free.length && !nuevas.length) break;
+    let blobs;
+    try { blobs = await Promise.all(chunk.map(f => photoBlob(slug, f))); }
+    catch { toast('No pude leer una de las fotos de la nube.'); return false; }
+    S.ctl = new AbortController();
+    let out;
+    try {
+      out = await S.sample.json(analysisPrompt(m, slug, chunk, free, nuevas.length ? nuevas : null), { images: blobs, signal: S.ctl.signal, modelTier: 'default' });
+    } catch (e) {
+      const c = e?.code;
+      if (c === 'cancelled') return false;
+      if (c === 'not_granted' || c === 'sampling_disabled' || c === 'images_unavailable') toast('Claude no tiene permiso en esta página. Pedile a Emily en el chat que escriba los prompts.');
+      else if (c === 'rate_limited') toast('Llegaste al límite de Claude por ahora. Probá más tarde: sigue donde quedó.');
+      else if (c === 'refused') toast('Claude no quiso escribir para alguna de estas fotos. Cambiala con ↻ y volvé a probar.');
+      else if (c === 'invalid_json') toast('La respuesta vino mal armada. Tocá «Escribir prompts» otra vez.');
+      else toast('Algo falló hablando con Claude (' + (c || 'error') + '). Probá de nuevo.');
+      return false;
+    }
+    const arr = Array.isArray(out) ? out : (Array.isArray(out?.reels) ? out.reels : []);
+    const freeNums = new Set([...free.map(r => r.n), ...nuevas]);
+    for (let k = 0; k < chunk.length; k++) {
+      const f = chunk[k];
+      const it = arr.find(x => Number(x?.foto) === f.n) || arr[k];
+      if (!it || typeof it.prompt !== 'string' || !it.prompt.trim()) continue;
+      const cat = ['sexy', 'baile', 'normal'].includes(it.cat) ? it.cat : 'normal';
+      let n = Number(it.reel);
+      if (!freeNums.has(n)) {
+        const sameCat = free.find(r => freeNums.has(r.n) && r.cat === cat);
+        n = sameCat ? sameCat.n : [...freeNums][0];
+      }
+      if (!n) continue;
+      freeNums.delete(n);
+      const prevReel = reelMap.get(n);
+      const base = prevReel && prevReel.origen !== 'foto'
+        ? { cat: prevReel.cat, titulo: prevReel.titulo, idea: prevReel.idea, fotoIdeal: prevReel.fotoIdeal, prompt: prevReel.prompt, hook: prevReel.hook, caption: prevReel.caption }
+        : (prevReel?.base || null);
+      const doc = {
+        modelo: slug, n, cat,
+        titulo: cut(it.titulo, 80) || prevReel?.titulo || 'Toma ' + pad2(n),
+        idea: cut(it.idea, 400), prompt: cut(it.prompt, 2400), hook: cut(it.hook, 120), caption: cut(it.caption, 300), audio: cut(it.audio, 120),
+        loop: it.loop === true, alerta: cut(it.alerta, 200),
+        foto: f.n, fotoAsset: f.asset, ruta: f.ruta || '', fotoIdeal: prevReel?.fotoIdeal || '', fotoEN: prevReel?.fotoEN || '',
+        origen: 'foto', estado: prevReel?.estado || 'pendiente', vistas: prevReel?.vistas ?? null, base, actualizado: now()
+      };
+      try {
+        await dbWrite(`reels/${slug}-${pad2(n)}`, doc);
+        await dbWrite(`fotos/${slug}-${pad2(f.n)}`, { reel: n }, 'update');
+      } catch (e) { dbFail(e); return false; }
+      reelMap.set(n, { id: `${slug}-${pad2(n)}`, ...doc });
+      taken.add(n);
+    }
+  }
+  s.progress = '';
+  return true;
+}
+
+async function analyzeAll(slugs) {
+  if (S.busy) return;
+  S.busy = 'escribiendo prompts…'; S.stop = false; syncPill(); renderEscanear();
+  for (const slug of slugs) { const ok = await analyzeModel(slug); renderEscanear(); if (!ok || S.stop) break; }
+  S.busy = ''; S.ctl = null; syncPill(); renderEscanear();
+}
+
+function renderEscanear() {
+  const st = $('#scan-status'), s2 = $('#st-2'), s3 = $('#st-3');
+  if (isMobileLike() && !S.scan) st.innerHTML = '<span class="note warn">Desde el celular no se puede elegir una carpeta. Hacelo desde la compu con Chrome o Edge; acá vas a ver el resultado.</span>';
+  else if (!S.scan) st.textContent = 'Todavía no elegiste ninguna carpeta.';
+  else st.textContent = `Carpeta «${S.scan.root}»: ${S.scan.folders.length} carpetas · ${nf.format(S.scan.total.fotos)} fotos · ${nf.format(S.scan.total.videos)} videos · ${fmtBytes(S.scan.total.bytes)}.`;
+
+  const cloudModels = modelList().filter(m => fotosOf(m.id).length);
+  if (!S.scan) {
+    s2.hidden = true;
+    if (cloudModels.length) {
+      s3.hidden = false;
+      s3.innerHTML = `<div class="step-h"><span class="tk">EN LA NUBE</span><h3>Fotos ya subidas</h3></div>${cloudModels.map(m => cloudRow(m.id)).join('')}${analyzeControls(cloudModels.map(m => m.id))}`;
+    } else s3.hidden = true;
+    return;
+  }
+
+  s2.hidden = false;
+  const rows = S.scan.folders.map(f => {
+    const subs = Object.entries(f.subs).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, v]) => `<span class="chip">${esc(k)} · ${v}</span>`).join('');
+    const known = S.modelos.has(f.slug);
+    return `<tr>
+      <td><input type="checkbox" id="chk-${esc(f.slug)}" data-chk="${esc(f.slug)}" ${S.checked.has(f.slug) ? 'checked' : ''} aria-label="Usar ${esc(f.name)} como modelo"></td>
+      <td><label for="chk-${esc(f.slug)}"><b>${esc(f.name)}</b></label>${known ? ' <span class="chip">con ficha</span>' : ''}</td>
+      <td>${f.cara ? '<span class="cat normal">CARA</span>' : ''}</td>
+      <td class="num">${nf.format(f.fotos.length)}</td>
+      <td class="num">${nf.format(f.videos)}</td>
+      <td class="num">${fmtBytes(f.bytes)}</td>
+      <td><div class="chips">${subs}</div></td>
+    </tr>`;
+  }).join('');
+  s2.innerHTML = `
+    <div class="step-h"><span class="tk">PASO 2</span><h3>Inventario y modelos</h3></div>
+    <p class="note">Marcadas: las que ya tienen ficha o una foto de cara. Tildá o destildá las que quieras.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th></th><th>Carpeta</th><th>Cara</th><th>Fotos</th><th>Videos</th><th>Peso</th><th>Subcarpetas</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <div class="row">
+      <button class="btn primary" data-act="pick" ${S.busy ? 'disabled' : ''}>Elegir 20 fotos de las ${S.checked.size} marcadas</button>
+      <button class="btn" data-act="save-inv" ${S.busy || !S.db ? 'disabled' : ''}>Guardar inventario en la nube</button>
+    </div>`;
+
+  const sels = [...S.sel.entries()];
+  if (!sels.length) { s3.hidden = true; return; }
+  s3.hidden = false;
+  const blocks = sels.map(([slug, s]) => {
+    const fold = S.scan.folders.find(f => f.slug === slug);
+    const up = new Map(fotosOf(slug).map(f => [f.n, f]));
+    const thumbs = s.picked.map((c, i) => {
+      const u = up.get(i + 1);
+      const inCloud = u && u.ruta === c.rel;
+      return `<div class="th"><img src="${esc(c.meta?.thumb || '')}" alt="${esc(c.rel)}" title="${esc(c.rel)}" loading="lazy"><span class="nn">${pad2(i + 1)}</span>${inCloud ? '<span class="ok">NUBE</span>' : ''}<button class="sw" data-swap="${esc(slug)}" data-idx="${i}" title="Cambiar por otra" ${S.busy ? 'disabled' : ''}>↻</button></div>`;
+    }).join('');
+    const nUp = s.picked.filter((c, i) => up.get(i + 1)?.ruta === c.rel).length;
+    const nAn = reelsOf(slug).filter(r => r.origen === 'foto').length;
+    return `<div class="selm">
+      <div class="selm-h">
+        <h4>${esc(fold?.name || slug)}</h4>
+        <span class="note" id="prog-${esc(slug)}">${esc(s.progress || `${s.picked.length} elegidas de ${nf.format(s.total ?? 0)} · ${nUp} en la nube · ${nAn} con prompt`)}</span>
+        <button class="btn sm" data-act="zip" data-slug="${esc(slug)}" ${s.picked.length && !S.busy ? '' : 'disabled'}>ZIP con las originales</button>
+      </div>
+      <div class="thumbs">${thumbs || '<p class="note">Midiendo fotos…</p>'}</div>
+      <span class="note" id="aprog-${esc(slug)}"></span>
+    </div>`;
+  }).join('');
+  const ready = sels.filter(([, s]) => s.picked.length).map(([k]) => k);
+  s3.innerHTML = `
+    <div class="step-h"><span class="tk">PASO 3</span><h3>Revisar, subir y escribir prompts</h3></div>
+    <p class="note">Estas son las fotos de inicio de cada reel. Evitá fotos con la boca abierta, con dos personas o con texto.</p>
+    ${blocks}
+    <div class="row">
+      <button class="btn primary" data-act="upload" ${ready.length && !S.busy && S.assets ? '' : 'disabled'}>Subir las fotos a la nube</button>
+      ${S.busy ? '<button class="btn" data-act="stop">Frenar</button>' : ''}
+    </div>
+    ${!S.assets && S.capsReady ? '<p class="note warn">Para subir fotos abrí la página desde claude.ai con tu cuenta.</p>' : ''}
+    ${analyzeControls(ready)}`;
+}
+
+function cloudRow(slug) {
+  const m = S.modelos.get(slug) || {};
+  const fs = fotosOf(slug);
+  const nAn = reelsOf(slug).filter(r => r.origen === 'foto').length;
+  const thumbs = fs.map(f => `<div class="th"><img src="${esc(assetUrl(f.asset))}" alt="" loading="lazy"><span class="nn">${pad2(f.n)}</span>${f.reel ? `<span class="ok">R${pad2(f.reel)}</span>` : ''}</div>`).join('');
+  return `<div class="selm"><div class="selm-h"><h4>${esc(m.nombre || slug)}</h4><span class="note" id="aprog-${esc(slug)}">${fs.length} fotos · ${nAn} con prompt</span><a class="btn sm" href="#m-${esc(slug)}">Ver reels</a></div><div class="thumbs">${thumbs}</div></div>`;
+}
+
+function analyzeControls(slugs) {
+  const withCloud = slugs.filter(s => fotosOf(s).length);
+  if (!withCloud.length) return '';
+  const can = !!S.sample;
+  return `<div class="row">
+    <button class="btn ${can ? 'primary' : ''}" data-act="analyze" data-slugs="${esc(withCloud.join(','))}" ${!can || S.busy ? 'disabled' : ''}>Escribir prompts con Claude</button>
+    ${S.busy ? '<button class="btn" data-act="stop">Frenar</button>' : ''}
+    <span class="note">${can ? 'Claude mira cada foto y escribe el prompt a medida. Usa tu cuenta de Claude.' : 'Claude no está disponible acá: pedile a Emily en el chat que escriba los prompts con estas fotos.'}</span>
+  </div>`;
+}
+
+/* ---------------- eventos ---------------- */
+document.addEventListener('click', async ev => {
+  const t = ev.target.closest('button, a');
+  if (!t) return;
+  if (t.dataset.copySel) { const el = $(t.dataset.copySel); if (el) copyText(el.textContent.trim(), t); return; }
+  if (t.dataset.copyReel) {
+    const id = t.dataset.copyReel, r = S.reels.get(id);
+    if (!r) return;
+    const text = t.dataset.field === 'fotoPrompt' ? fotoPrompt(S.modelos.get(r.modelo), r) : r[t.dataset.field];
+    copyText(String(text || ''), t);
+    return;
+  }
+  if (t.dataset.estado && t.dataset.reel) {
+    const r = S.reels.get(t.dataset.reel);
+    if (!r || r.estado === t.dataset.estado) return;
+    try { await dbWrite('reels/' + t.dataset.reel, { estado: t.dataset.estado, actualizado: now() }, 'update'); }
+    catch (e) { dbFail(e); }
+    return;
+  }
+  if (t.dataset.fcat) { S.filtro.cat = t.dataset.fcat; render(); return; }
+  if (t.dataset.fest) { S.filtro.estado = t.dataset.fest; render(); return; }
+  if (t.dataset.foto) { openFoto(t.dataset.foto); return; }
+  if (t.dataset.swap) { swapPick(t.dataset.swap, Number(t.dataset.idx)); return; }
+  const act = t.dataset.act;
+  if (!act) return;
+  if (act === 'edit-ficha') { S.editFicha = t.dataset.slug; render(); }
+  else if (act === 'cancel-ficha') { S.editFicha = ''; render(); }
+  else if (act === 'save-ficha') {
+    const slug = t.dataset.slug;
+    const edad = Number($('#f-edad').value);
+    if (edad && edad < 21) { toast('La edad tiene que ser 21 o más.'); return; }
+    const data = {
+      edad: edad || null, look: $('#f-look').value.trim(), lookEN: $('#f-lookEN').value.trim(), estetica: $('#f-estetica').value.trim(),
+      pilares: $('#f-pilares').value.split(',').map(x => x.trim()).filter(Boolean), serie: $('#f-serie').value.trim()
+    };
+    try { await dbWrite('modelos/' + slug, data, 'update'); S.editFicha = ''; toast('Ficha guardada.'); render(); }
+    catch (e) { dbFail(e); }
+  }
+  else if (act === 'copy-all' || act === 'txt-all') {
+    const slug = t.dataset.slug, m = S.modelos.get(slug);
+    const text = `${m?.nombre || slug} · ${reelsOf(slug).length} reels · Kling 3.0\nNegative prompt: ${NEGATIVE}\n\n` + reelsOf(slug).map(r => reelText(m, r)).join('\n\n');
+    if (act === 'copy-all') copyText(text, t); else saveFile(`${slug}-reels.txt`, text);
+  }
+  else if (act === 'pick') pickChecked();
+  else if (act === 'save-inv') saveInventory();
+  else if (act === 'upload') uploadAll();
+  else if (act === 'zip') zipModel(t.dataset.slug);
+  else if (act === 'analyze') analyzeAll(t.dataset.slugs.split(',').filter(Boolean));
+  else if (act === 'stop') { S.stop = true; S.ctl?.abort(); toast('Frenando…'); }
+});
+
+document.addEventListener('change', async ev => {
+  const t = ev.target;
+  if (t.dataset.chk) { if (t.checked) S.checked.add(t.dataset.chk); else S.checked.delete(t.dataset.chk); renderEscanear(); return; }
+  if (t.dataset.vistas) {
+    const v = t.value === '' ? null : Math.max(0, Math.round(Number(t.value)));
+    try { await dbWrite('reels/' + t.dataset.vistas, { vistas: v, actualizado: now() }, 'update'); toast('Vistas guardadas.'); }
+    catch (e) { dbFail(e); }
+  }
+});
+
+function openFoto(id) {
+  const lb = $('#lb');
+  lb.innerHTML = `<div class="lb-in"><img src="${esc(assetUrl(id))}" alt="Foto de inicio"><div class="row"><button class="btn primary" data-lb="save">Guardar foto</button><button class="btn" data-lb="close">Cerrar</button></div></div>`;
+  lb.hidden = false;
+  lb.onclick = async e => {
+    const b = e.target.closest('[data-lb]');
+    if (e.target === lb || b?.dataset.lb === 'close') { lb.hidden = true; lb.innerHTML = ''; return; }
+    if (b?.dataset.lb === 'save') {
+      try { const r = await fetch(assetUrl(id)); const blob = await r.blob(); await saveFile(`foto-${id.slice(0, 6)}.jpg`, blob); }
+      catch { toast('No se pudo bajar la foto.'); }
+    }
+  };
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#lb').hidden) { $('#lb').hidden = true; $('#lb').innerHTML = ''; } });
+
+render();
+initCaps();
+})();
+</script>

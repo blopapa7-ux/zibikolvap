@@ -1,2 +1,6 @@
 node_modules/
 .DS_Store
+
+# estudio-reels: capturas y carpeta de prueba generadas por los tests
+estudio-reels/test/shots/
+estudio-reels/test/fixture/
