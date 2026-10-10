@@ -1,0 +1,5 @@
+# Fotos de referencia de ella: solo en la PC de Pk, nunca en git ni en pagina/ (todo pagina/ se publica)
+referencias/
+
+# Capturas del QA: se regeneran con npm run madda:qa
+output/

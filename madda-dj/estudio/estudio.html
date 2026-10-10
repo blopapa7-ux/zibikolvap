@@ -1,0 +1,74 @@
+<title>Estudio MADDA</title>
+<style>
+/*ESTILOS*/
+</style>
+<!--CUERPO-->
+<a class="saltar" href="#herramientas">Saltar a los prompts</a>
+
+<header class="barra">
+  <a class="barra-marca" href="#arriba"><span class="tornasol-texto">MADDA</span><span class="barra-sub">Estudio</span></a>
+  <nav class="barra-nav" aria-label="Secciones"><!--NAV--></nav>
+  <a class="barra-progreso" href="#herramientas" title="Prompts marcados como hechos">
+    <span class="barra-progreso-num"><span data-progreso-num>0</span>/<!--TOTAL--></span>
+    <span class="medidor" aria-hidden="true"><span data-progreso-barra></span></span>
+  </a>
+</header>
+
+<div class="marco" id="arriba">
+  <section class="intro" aria-labelledby="titulo">
+    <p class="volanta">Identidad visual · prompts para Higgsfield</p>
+    <h1 id="titulo">Estudio <span class="tornasol-texto">MADDA</span></h1>
+    <p class="bajada">Todos los prompts para armar la identidad de MADDA: logos, visuales para las pantallas, flyers y loops de video. Completás los datos una vez y cada prompt se arma solo.</p>
+    <ol class="pasos">
+      <li><span class="paso-num">1</span><div><strong>Completá los datos</strong><p>Ya vienen con lo de MADDA. Si cambiás el nombre, un color o la fecha, se actualizan todos los prompts.</p></div></li>
+      <li><span class="paso-num">2</span><div><strong>Copiá el prompt</strong><p>Lo que sale de tus datos aparece <span class="tk tk-demo">resaltado</span>. Tocá <em>Copiar</em> y se copia el texto limpio.</p></div></li>
+      <li><span class="paso-num">3</span><div><strong>Pegalo en Higgsfield</strong><p>Elegí el modelo que dice la ficha (Nano Banana 2 o Kling 3.0), con el formato y las referencias que pide.</p></div></li>
+      <li><span class="paso-num">4</span><div><strong>Marcá Hecho</strong><p>Así sabés por dónde ibas. Queda guardado en este navegador.</p></div></li>
+    </ol>
+    <p class="regla"><strong>Antes de generar:</strong> las imágenes con la cara de MADDA se hacen solo con fotos reales de ella como referencia y con su OK. Sin logos de terceros, y ningún video con flashes ni estrobos.</p>
+  </section>
+
+  <aside class="lateral" aria-label="Datos de MADDA">
+<!--DATOS-->
+  </aside>
+
+  <main class="contenido" id="contenido">
+    <div class="herramientas" id="herramientas">
+      <div class="buscar">
+        <label for="buscar" class="sr">Buscar un prompt</label>
+        <input type="search" id="buscar" placeholder="Buscar: logo, loop, flyer, NB-A1…" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="filtros" role="group" aria-label="Mostrar">
+        <button type="button" class="filtro" data-filtro="todo" aria-pressed="true">Todo <span class="filtro-n" data-n="todo"><!--TOTAL--></span></button>
+        <button type="button" class="filtro" data-filtro="nb2" aria-pressed="false">NB2 <span class="filtro-n" data-n="nb2"><!--N-NB2--></span></button>
+        <button type="button" class="filtro" data-filtro="kling" aria-pressed="false">Kling <span class="filtro-n" data-n="kling"><!--N-KLING--></span></button>
+        <button type="button" class="filtro" data-filtro="pendientes" aria-pressed="false">Pendientes <span class="filtro-n" data-n="pendientes"><!--TOTAL--></span></button>
+        <button type="button" class="filtro" data-filtro="hechos" aria-pressed="false">Hechos <span class="filtro-n" data-n="hechos">0</span></button>
+      </div>
+      <div class="progreso">
+        <span class="medidor medidor-grande" aria-hidden="true"><span data-progreso-barra></span></span>
+        <p class="progreso-texto" aria-live="polite"><strong data-progreso-num>0</strong> de <!--TOTAL--> prompts hechos</p>
+      </div>
+    </div>
+
+<!--INDICE-->
+
+    <p class="resultado" data-resultado hidden></p>
+    <div class="biblia">
+<!--BIBLIA-->
+    </div>
+    <div class="sin-resultados" data-sin-resultados hidden>
+      <p>No hay prompts con ese filtro.</p>
+      <button type="button" class="boton-sec" data-ver-todo>Ver todo</button>
+    </div>
+  </main>
+</div>
+
+<p class="sr" aria-live="polite" data-aviso></p>
+
+<footer class="pie">
+  <p>Estudio de prompts de MADDA · armado por Pk.</p>
+  <p>Tipografías Unbounded, Hanken Grotesk y JetBrains Mono (SIL Open Font License).</p>
+</footer>
+
+<!--SCRIPTS-->

@@ -1,0 +1,6 @@
+# Identidad MADDA · página privada estática (sin build).
+# Deploy desde esta carpeta: netlify deploy --prod --dir .
+[build]
+  publish = "."
+
+# Los encabezados de seguridad y el noindex están en _headers.

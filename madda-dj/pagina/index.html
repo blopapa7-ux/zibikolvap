@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Identidad MADDA</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Propuesta de identidad visual para MADDA, DJ de techno.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#06050B">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./fonts/fonts.css">
+<link rel="stylesheet" href="./estilo.css">
+</head>
+<body>
+<a class="saltar" href="#pedido">Saltar al contenido</a>
+
+<header class="portada" id="portada">
+  <canvas class="portada-lienzo" aria-hidden="true"></canvas>
+  <div class="marco portada-marco">
+    <div class="portada-arriba">
+      <p class="ojo" data-campo="portada.ojo"></p>
+      <p class="portada-version" id="portada-version"></p>
+    </div>
+    <h1 class="portada-logo"><span class="sr" id="nombre-h1"></span><span class="portada-svg" id="portada-svg" aria-hidden="true"></span></h1>
+    <div class="portada-abajo">
+      <p class="portada-linea" data-campo="portada.linea"></p>
+      <p class="portada-meta">
+        <a class="portada-ig" id="portada-ig" href="#portada" target="_blank" rel="noopener noreferrer"></a>
+        <span data-campo="portada.hecha"></span>
+      </p>
+    </div>
+    <a class="bajar" href="#pedido"><span data-campo="portada.bajar"></span><i aria-hidden="true"></i></a>
+  </div>
+</header>
+
+<nav class="indice" aria-label="Secciones">
+  <div class="marco indice-marco">
+    <a class="indice-marca" href="#portada" id="indice-marca" aria-label="Volver a la portada"></a>
+    <ul>
+      <li><a href="#pedido">Pedido</a></li>
+      <li><a href="#logo">Logo</a></li>
+      <li><a href="#colores">Colores</a></li>
+      <li><a href="#sonido">Sonido</a></li>
+      <li><a href="#visuales">Visuales</a></li>
+      <li><a href="#redes">Redes</a></li>
+      <li><a href="#fechas">Fechas</a></li>
+      <li><a href="#bio">Bio</a></li>
+      <li><a href="#eleccion">Tu elección</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="marco" id="contenido">
+
+  <section class="seccion" id="pedido" aria-labelledby="pedido-t">
+    <div class="cabeza">
+      <p class="ojo" id="pedido-ojo"></p>
+      <h2 id="pedido-t">Lo que me pediste</h2>
+      <p class="bajada" data-campo="pedido.bajada"></p>
+    </div>
+    <ul class="pares" id="pares"></ul>
+    <p class="cierre" data-campo="pedido.cierre"></p>
+  </section>
+
+  <section class="seccion" id="logo" aria-labelledby="logo-t">
+    <div class="cabeza">
+      <p class="ojo" id="logo-ojo"></p>
+      <h2 id="logo-t">Tu logo · elegí</h2>
+      <p class="bajada" data-campo="logos.bajada"></p>
+    </div>
+    <ul class="logos" id="logos"></ul>
+    <div class="chiquito" id="chiquito">
+      <div class="chiquito-texto">
+        <h3>Así se ve en chiquito</h3>
+        <p data-campo="logos.chiquito"></p>
+      </div>
+      <figure class="chiquito-uno">
+        <div class="avatar avatar-110" id="avatar-110"></div>
+        <figcaption>110 px · foto de perfil</figcaption>
+      </figure>
+      <figure class="chiquito-uno">
+        <div class="avatar avatar-40" id="avatar-40"></div>
+        <figcaption>40 px · menciones y comentarios</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="seccion" id="colores" aria-labelledby="colores-t">
+    <div class="cabeza">
+      <p class="ojo" id="colores-ojo"></p>
+      <h2 id="colores-t">Tus colores</h2>
+      <p class="bajada" data-campo="paletas.bajada"></p>
+    </div>
+    <ul class="paletas" id="paletas"></ul>
+
+    <div class="lab" id="legible">
+      <div class="sub-cabeza">
+        <h3 class="sub-titulo">Tu nombre arriba de cualquier visual</h3>
+        <p class="bajada" data-campo="legibilidad.bajada"></p>
+      </div>
+      <div class="lab-control">
+        <button type="button" class="boton" id="borde" aria-pressed="true"><span class="interruptor" aria-hidden="true"></span>Borde fino + sombra sutil</button>
+        <blockquote class="regla"><p data-campo="legibilidad.regla"></p><footer data-campo="legibilidad.reglaFirma"></footer></blockquote>
+      </div>
+      <ul class="lab-grilla" id="lab"></ul>
+    </div>
+  </section>
+
+  <section class="seccion" id="sonido" aria-labelledby="sonido-t">
+    <div class="cabeza">
+      <p class="ojo" id="sonido-ojo"></p>
+      <h2 id="sonido-t">Tu sonido</h2>
+      <p class="bajada" data-campo="sonido.bajada"></p>
+    </div>
+
+    <article class="playlist" id="playlist" aria-labelledby="playlist-t">
+      <div class="disco" aria-hidden="true"></div>
+      <div class="playlist-texto">
+        <p class="ojo">Tu playlist</p>
+        <h3 id="playlist-t"></h3>
+        <p class="playlist-nota" data-campo="playlist.nota"></p>
+        <div class="playlist-acciones">
+          <button type="button" class="boton boton-lleno" id="escuchar" hidden>Escucharla acá</button>
+          <a class="boton" id="abrir-spotify" href="#sonido" target="_blank" rel="noopener noreferrer">Abrir en Spotify <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="spotify-marco" id="spotify-marco" hidden></div>
+    </article>
+
+    <div class="sub" id="estilos-bloque">
+      <div class="sub-cabeza">
+        <h3 class="sub-titulo">Estilos de techno</h3>
+        <p class="bajada" data-campo="estilos.bajada"></p>
+      </div>
+      <div class="estilos" id="estilos">
+        <div class="eje" aria-hidden="true"><span class="eje-titulo">BPM aprox.</span><div class="eje-pista" id="eje"></div></div>
+        <ul class="estilos-lista" id="estilos-lista"></ul>
+      </div>
+    </div>
+
+    <div class="sub" id="tempo">
+      <div class="sub-cabeza">
+        <h3 class="sub-titulo">Tocá al ritmo de un tema y te digo los BPM</h3>
+        <p class="bajada" data-campo="tap.bajada"></p>
+      </div>
+      <div class="tap">
+        <button type="button" class="tap-boton" id="tap"><span class="tap-anillo" aria-hidden="true"></span><span class="tap-texto">Tocá acá<br>en cada bombo</span></button>
+        <div class="tap-lectura">
+          <p class="tap-bpm" aria-live="polite"><span id="tap-bpm" class="vacio">000</span> <span class="tap-unidad">BPM</span></p>
+          <p class="tap-estado" id="tap-estado">Tocá por lo menos 4 veces seguidas.</p>
+          <p class="tap-coinciden" id="tap-coinciden"></p>
+          <button type="button" class="boton boton-chico" id="tap-reiniciar">Empezar de nuevo</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub" id="set">
+      <div class="sub-cabeza">
+        <h3 class="sub-titulo">Cómo se arma un set</h3>
+        <p class="bajada" data-campo="set.bajada"></p>
+      </div>
+      <figure class="set-figura">
+        <div class="set-grafico" id="set-grafico" role="img" aria-label="Curva de energía de un set de dos horas: arranca cerca de 122 BPM, sube hasta unos 133 en el pico y baja en el cierre."></div>
+        <figcaption>Ejemplo de un set de dos horas. BPM aproximados.</figcaption>
+      </figure>
+      <ol class="fases" id="fases"></ol>
+      <p class="consejo" data-campo="set.consejo"></p>
+    </div>
+  </section>
+
+  <section class="seccion" id="visuales" aria-labelledby="visuales-t">
+    <div class="cabeza">
+      <p class="ojo" id="visuales-ojo"></p>
+      <h2 id="visuales-t">Tus visuales</h2>
+      <p class="bajada" data-campo="visuales.bajada"></p>
+    </div>
+    <ul class="leds" id="leds"></ul>
+    <div class="leds-nota">
+      <p data-campo="visuales.pantalla"></p>
+      <p data-campo="visuales.kling"></p>
+    </div>
+  </section>
+
+  <section class="seccion" id="redes" aria-labelledby="redes-t">
+    <div class="cabeza">
+      <p class="ojo" id="redes-ojo"></p>
+      <h2 id="redes-t">En tus redes</h2>
+      <p class="bajada" data-campo="redes.bajada"></p>
+    </div>
+    <div class="mocks" id="mocks"></div>
+  </section>
+
+  <section class="seccion" id="fechas" aria-labelledby="fechas-t">
+    <div class="cabeza">
+      <p class="ojo" id="fechas-ojo"></p>
+      <h2 id="fechas-t">Fechas</h2>
+      <p class="bajada" data-campo="fechas.nota"></p>
+    </div>
+    <div id="fechas-proximas"></div>
+    <div id="fechas-pasadas"></div>
+  </section>
+
+  <section class="seccion" id="bio" aria-labelledby="bio-t">
+    <div class="cabeza">
+      <p class="ojo">Borrador</p>
+      <h2 id="bio-t">Tu bio · borrador</h2>
+      <p class="bajada" data-campo="bio.bajada"></p>
+    </div>
+    <div class="bio">
+      <article class="bio-borrador" aria-label="Borrador de la bio">
+        <p class="bio-etq" data-campo="bio.etiqueta"></p>
+        <div class="bio-texto" id="bio-texto"></div>
+        <div class="bio-corta" id="bio-corta-bloque">
+          <p class="bio-corta-etq">Versión corta para Instagram</p>
+          <p class="bio-corta-texto" data-campo="bio.corta"></p>
+        </div>
+      </article>
+      <form class="preguntas" id="preguntas" aria-label="Preguntas para completar la bio"></form>
+    </div>
+  </section>
+
+  <section class="seccion" id="eleccion" aria-labelledby="eleccion-t">
+    <div class="cabeza">
+      <p class="ojo">Resumen en vivo</p>
+      <h2 id="eleccion-t">Tu elección</h2>
+      <p class="bajada" data-campo="eleccion.bajada"></p>
+    </div>
+    <div class="eleccion">
+      <div class="eleccion-logo" id="eleccion-logo"></div>
+      <div class="eleccion-datos">
+        <dl class="resumen" id="resumen"></dl>
+        <div class="eleccion-acciones">
+          <button type="button" class="boton boton-lleno" id="copiar">Copiar mi elección</button>
+          <a class="boton" id="whatsapp" href="#eleccion" target="_blank" rel="noopener noreferrer">Mandársela a Pk por WhatsApp <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="estado-copia" id="estado-copia" role="status" aria-live="polite"></p>
+        <div class="copia-respaldo" id="copia-respaldo" hidden>
+          <label for="copia-texto">Tu elección en texto</label>
+          <textarea id="copia-texto" readonly rows="8"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="despedida" id="despedida">
+      <p class="despedida-texto" data-campo="despedida.texto"></p>
+      <p class="despedida-firma" data-campo="despedida.firma"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <div class="marco pie-marco">
+    <p data-campo="pie"></p>
+    <p class="pie-licencias" id="pie-licencias">Tipografías con licencia SIL OFL<span id="pie-licencias-link" data-solo-web> · <a href="fonts/LICENCIAS.txt" target="_blank" rel="noopener">ver licencias</a></span></p>
+  </div>
+</footer>
+
+<script src="./datos.js"></script>
+<script src="./logos.js"></script>
+<script src="./visuales.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
