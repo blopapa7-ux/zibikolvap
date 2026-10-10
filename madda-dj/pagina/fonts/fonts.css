@@ -1,0 +1,9 @@
+/* Tipografías locales (OFL, ver LICENCIAS.txt). Las variables cubren todos los pesos. */
+@font-face{font-family:"Unbounded";src:url(unbounded-var.woff2) format("woff2");font-weight:200 900;font-display:swap}
+@font-face{font-family:"Michroma";src:url(michroma-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Syne";src:url(syne-var.woff2) format("woff2");font-weight:400 800;font-display:swap}
+@font-face{font-family:"Big Shoulders Display";src:url(big-shoulders-display-var.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Major Mono Display";src:url(major-mono-display-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Dela Gothic One";src:url(dela-gothic-one-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Hanken Grotesk";src:url(hanken-grotesk-var.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"JetBrains Mono";src:url(jetbrains-mono-var.woff2) format("woff2");font-weight:100 800;font-display:swap}
